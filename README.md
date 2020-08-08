@@ -2,15 +2,22 @@
 ## Automatisation de l'installation de MedShakeEHR via Ansible pour Debian
 En cours de développement, ne pas utiliser en production.
 
-A faire :
-- Sécurisation de l'OS
+Fonctionnels :
+
 - Installation d'apache
-- Sécurisation d'apache
 - Installation de MariaDB
-- Sécurisation de MariaDB
 - Installation de PHP
-- Sécurisation de PHP
 - Installation de MedShakeEHR
+
+Produits des erreurs :
+- Sécurisation de l'OS
+
+A faire :
+
+- Sécurisation d'apache
+- Sécurisation de MariaDB
+- Sécurisation de PHP
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
 - ?
+- Variables pour le rôle MedShakeEHR

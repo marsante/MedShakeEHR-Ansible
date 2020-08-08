@@ -1,0 +1,26 @@
+---
+- name: Set timezone to Europe/Paris
+  timezone:
+    name: Europe/Paris
+
+- name: Install packages
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: [ 'ghostscript', 'imagemagick', 'pdftk', 'git', 'curl', 'composer' 'unattended-upgrades' ]
+
+- name: Create ehr folders
+  file:
+    path: /home/ehr/public_html
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+    mode: '0775'
+
+- name: Download self installer
+  get_url:
+    url: https://raw.githubusercontent.com/MedShake/MedShakeEHR-base/master/installer/self-installer.php
+    dest: /home/ehr/public_html
+    owner: www-data
+    group: www-data
+    mode: '0755'
+

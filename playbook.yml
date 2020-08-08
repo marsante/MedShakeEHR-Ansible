@@ -1,0 +1,18 @@
+---
+
+- name: Installation
+  hosts: all
+  vars_files:
+    - vars/main.yml
+    
+  roles:
+    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
+    - { role: Apache, tags: ['Apache', 'base', 'minimal'] }
+    - { role: PHP, tags: ['PHP', 'base', 'minimal'] }
+    - { role: MariaDB, ags: ['MariaDB', 'base', 'minimal'] }
+    - { role: SSH-sec, tags: ['SSH-sec', 'security', 'base'] }
+    - { role: OS-sec, tags: ['OS-sec', 'security', 'base'] }
+    #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
+  post_tasks:
+    - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
+...

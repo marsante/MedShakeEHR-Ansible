@@ -1,0 +1,136 @@
+---
+os_desktop_enable: false
+os_auth_pw_max_age: 9999
+
+ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
+ssh_authorized_keys_file: ''
+
+apache_listen_port: 80
+apache_listen_port_ssl: 443
+
+apache_create_vhosts: true
+apache_vhosts_filename: "msehr.local.conf"
+apache_vhosts_template: "msehr.local.conf.j2"
+apache_remove_default_vhost: true
+
+apache_vhosts:
+    # Additional properties:
+    # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+    - servername: "msehr.local"
+      documentroot: "/home/ehr"
+
+      apache_vhosts_ssl: []
+      # Additional properties:
+      # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+      # - servername: "local.dev",
+      #   documentroot: "/var/www/html",
+      #   certificate_file: "/path/to/certificate.crt",
+      #   certificate_key_file: "/path/to/certificate.key",
+      #   # Optional.
+      #   certificate_chain_file: "/path/to/certificate_chain.crt"
+      
+      apache_ignore_missing_ssl_certificate: true
+      
+      # Only used on Debian/Ubuntu.
+      apache_mods_enabled:
+        - rewrite.load
+        - headers
+        - ssl.load
+      
+      # Set initial apache state. Recommended values: `started` or `stopped`
+      apache_state: started
+      
+      # Set apache state when configuration changes are made. Recommended values:
+      # `restarted` or `reloaded`
+      apache_restart_state: restarted
+      
+      # Apache package state; use `present` to make sure it's installed, or `latest`
+      # if you want to upgrade or switch versions using a new repo.
+      apache_packages_state: present
+
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
+# for RHEL/CentOS.
+php_enablerepo: ""
+
+# Extra packages to install (in addition to distro-specific default lists).
+php_packages_extra: 
+  - php-gd 
+  - php-intl 
+  - php-curl
+  - php-zip 
+  - php-xml 
+  - php-imagick 
+  - php-imap 
+  - php-soap 
+  - php-mysql 
+  - php-json 
+  - php-yaml
+
+# Default PHP version to install on Debian-based OSes (OS-specific).
+# php_default_version_debian: ""
+
+# PHP package state; use 'present' to make sure it's installed, or 'latest' if
+# you want to upgrade or switch versions using a new repo.
+php_packages_state: present
+
+# Whether to install recommended packages. Used only for Debian/Ubuntu.
+php_install_recommends: true
+
+# Set this to false if you're not using PHP with Apache/Nginx/etc.
+php_enable_webserver: true
+
+# PHP-FPM configuration.
+php_enable_php_fpm: false
+
+# The executable to run when calling PHP from the command line.
+php_executable: "php"
+
+# If this is set to false, none of the following options will have any effect.
+# Any and all changes to /etc/php.ini will be your responsibility.
+php_use_managed_ini: true
+php_max_input_vars: "1000"
+php_upload_max_filesize: "64M"
+php_post_max_size: "32M"
+php_date_timezone: "Europe/Paris"
+
+# Install PHP from source (instead of using a package manager) with these vars.
+php_install_from_source: false
+
+# Set this to the user ansible is logging in as - should have root
+# or sudo access
+mysql_user_home: /root
+mysql_user_name: root
+mysql_user_password: root
+
+# The default root user installed by mysql - almost always root
+mysql_root_home: /root
+mysql_root_username: root
+mysql_root_password: root
+
+# Set this to `true` to forcibly update the root password.
+mysql_root_password_update: false
+mysql_user_password_update: false
+
+mysql_enabled_on_startup: true
+
+# Whether my.cnf should be updated on every run.
+overwrite_global_mycnf: true
+
+# The following variables have a default value depending on operating system.
+# mysql_config_file: /etc/my.cnf
+# mysql_config_include_dir: /etc/my.cnf.d
+
+# Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
+# for RedHat systems (and derivatives).
+mysql_enablerepo: ""
+
+# Define a custom list of packages to install; if none provided, the default
+# package list from vars/[OS-family].yml will be used.
+mysql_packages:
+- python-mysqldb
+
+mysql_python_package_debian: python3-mysqldb
+
+
+
+
