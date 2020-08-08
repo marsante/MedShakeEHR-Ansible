@@ -1,0 +1,10 @@
+---
+timezone: "Europe/Paris"
+msehr_package:
+    - ghostscript
+    - imagemagick
+    - pdftk
+    - git
+    - curl
+    - composer
+documentpublic: "/home/ehr/public_html"

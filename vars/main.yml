@@ -1,4 +1,7 @@
 ---
+timezone: "Europe/Paris"
+documentpublic: "/home/ehr/public_html"
+
 os_desktop_enable: false
 os_auth_pw_max_age: 9999
 
