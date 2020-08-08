@@ -7,10 +7,10 @@ Fonctionnels :
 - Installation d'apache
 - Installation de MariaDB
 - Installation de PHP
-- Installation de MedShakeEHR
 
 Produits des erreurs :
 - Sécurisation de l'OS
+- Installation de MedShakeEHR (reste à configurer la base SQL Admin)
 
 A faire :
 
@@ -21,3 +21,4 @@ A faire :
 - Sécurisation d'OpenVPN
 - ?
 - Variables pour le rôle MedShakeEHR
+- Relancer le serveur apache en fin de conf
