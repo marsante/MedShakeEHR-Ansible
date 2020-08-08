@@ -1,0 +1,12 @@
+---
+- name: Install packages
+  apt: name=ufw  update_cache=yes state=latest
+
+- name: 
+  ufw:
+    state: enabled
+    rule: allow
+    name: '{{ item }}'
+  loop:
+    - OpenSSH
+    - WWW Full
