@@ -19,3 +19,6 @@
 [submodule "roles/Apache-sec"]
 	path = roles/Apache-sec
 	url = https://github.com/dev-sec/ansible-apache-hardening.git
+[submodule "roles/MariaDB-sec"]
+	path = roles/MariaDB-sec
+	url = https://github.com/dev-sec/ansible-mysql-hardening.git

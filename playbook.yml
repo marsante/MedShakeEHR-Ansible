@@ -11,6 +11,7 @@
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     - { role: PHP, tags: ['PHP', 'base', 'minimal'] }
     - { role: MariaDB, ags: ['MariaDB', 'base', 'minimal'] }
+    - { role: MariaDB-sec, ags: ['MariaDB-sec', 'security', 'base'] }
     - { role: AutoUpgrades, tags: ['AutoUpgrades', 'security', 'base'] }
     - { role: Firewall, tags: ['Firewall', 'security', 'base'] }
     - { role: SSH-sec, tags: ['SSH-sec', 'security', 'base'] }
