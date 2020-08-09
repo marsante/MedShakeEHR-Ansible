@@ -10,12 +10,12 @@
     - { role: Apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     - { role: PHP, tags: ['PHP', 'base', 'minimal'] }
+    - { role: AutoUpgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    - { role: OS-sec, tags: ['OS-sec', 'security', 'base'] }
     - { role: MariaDB, ags: ['MariaDB', 'base', 'minimal'] }
     - { role: MariaDB-sec, ags: ['MariaDB-sec', 'security', 'base'] }
-    - { role: AutoUpgrades, tags: ['AutoUpgrades', 'security', 'base'] }
-    - { role: Firewall, tags: ['Firewall', 'security', 'base'] }
     - { role: SSH-sec, tags: ['SSH-sec', 'security', 'base'] }
-    - { role: OS-sec, tags: ['OS-sec', 'security', 'base'] }
+    - { role: Firewall, tags: ['Firewall', 'security', 'base'] }
     #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
   post_tasks:
     - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening

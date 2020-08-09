@@ -5,17 +5,20 @@ En cours de développement, ne pas utiliser en production.
 Fonctionnels :
 
 - Installation d'apache
-- Installation de MariaDB (retour console)
+- Installation de MariaDB
 - Installation de PHP
 - Installation de MedShakeEHR
 - Sécurisation d'apache
+- Sécurisation de PHP
 - Sécurisation de MariaDB
-
-Produits des erreurs :
 - Sécurisation de l'OS
 
+Produits des erreurs :
+- Rôle MariaDB
+- Rôle Firewall
+- Rôle SSH
 A faire :
-- Sécurisation de PHP
+- Installation d'Orthanc
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
 - ?
