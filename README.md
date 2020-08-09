@@ -8,12 +8,12 @@ Fonctionnels :
 - Installation de MariaDB (retour console)
 - Installation de PHP
 - Installation de MedShakeEHR
+- Sécurisation d'apache
 
 Produits des erreurs :
 - Sécurisation de l'OS
 
 A faire :
-- Sécurisation d'apache
 - Sécurisation de MariaDB
 - Sécurisation de PHP
 - Installation d'OpenVPN
