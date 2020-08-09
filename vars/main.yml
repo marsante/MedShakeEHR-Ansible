@@ -18,8 +18,8 @@ apache_listen_port: 80
 apache_listen_port_ssl: 443
 
 apache_create_vhosts: true
-apache_vhosts_filename: "msehr.local.conf"
-apache_vhosts_template: "msehr.local.conf.j2"
+apache_vhosts_filename: "vhosts.conf"
+apache_vhosts_template: "vhosts.conf.j2"
   
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
@@ -30,7 +30,7 @@ apache_vhosts:
   # Additional properties:
   # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "msehr.local"
-    documentroot: "/home/ehr"
+    documentroot: "/home/ehr/public_html/"
   
 apache_vhosts_ssl: []
 # Additional properties:
@@ -157,6 +157,8 @@ ssh_host_key_algorithms: []         # sshd
 
 # Apache-Sec Vars
 apache_servername: "msehr.local"
+
+apache_modules_to_disable: []
 
 
 
