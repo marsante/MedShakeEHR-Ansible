@@ -1,56 +1,57 @@
 ---
+# Playbook Vars
+
+user: vagrant
+
+
+# MedShakeEHR Vars
+
 timezone: "Europe/Paris"
 documentpublic: "/home/ehr/public_html"
 
-os_desktop_enable: false
-os_auth_pw_max_age: 9999
 
-ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
-ssh_authorized_keys_file: ''
+# Apache Vars
+apache_enablerepo: ""
 
+apache_listen_ip: "*"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
 apache_create_vhosts: true
 apache_vhosts_filename: "msehr.local.conf"
 apache_vhosts_template: "msehr.local.conf.j2"
+  
+# On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
+# Set this to `true` to remove that default.
 apache_remove_default_vhost: true
 
+
 apache_vhosts:
-    # Additional properties:
-    # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-    - servername: "msehr.local"
-      documentroot: "/home/ehr"
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  - servername: "msehr.local"
+    documentroot: "/home/ehr"
+  
+apache_vhosts_ssl: []
+# Additional properties:
+# 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+# - servername: "local.dev",
+#   documentroot: "/var/www/html",
+#   certificate_file: "/path/to/certificate.crt",
+#   certificate_key_file: "/path/to/certificate.key",
+#   # Optional.
+#   certificate_chain_file: "/path/to/certificate_chain.crt"
 
-      apache_vhosts_ssl: []
-      # Additional properties:
-      # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-      # - servername: "local.dev",
-      #   documentroot: "/var/www/html",
-      #   certificate_file: "/path/to/certificate.crt",
-      #   certificate_key_file: "/path/to/certificate.key",
-      #   # Optional.
-      #   certificate_chain_file: "/path/to/certificate_chain.crt"
-      
-      apache_ignore_missing_ssl_certificate: true
-      
-      # Only used on Debian/Ubuntu.
-      apache_mods_enabled:
-        - rewrite.load
-        - headers
-        - ssl.load
-      
-      # Set initial apache state. Recommended values: `started` or `stopped`
-      apache_state: started
-      
-      # Set apache state when configuration changes are made. Recommended values:
-      # `restarted` or `reloaded`
-      apache_restart_state: restarted
-      
-      # Apache package state; use `present` to make sure it's installed, or `latest`
-      # if you want to upgrade or switch versions using a new repo.
-      apache_packages_state: present
+apache_ignore_missing_ssl_certificate: true
 
+# Only used on Debian/Ubuntu.
+apache_mods_enabled:
+  - rewrite.load
+  - headers.load
+  - ssl.load
+apache_mods_disabled: []
+
+#PHP Vars
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
 # for RHEL/CentOS.
 php_enablerepo: ""
@@ -68,7 +69,7 @@ php_packages:
   - php-mysql 
   - php-json 
   - php-yaml
-
+  
 # Default PHP version to install on Debian-based OSes (OS-specific).
 # php_default_version_debian: ""
 
@@ -85,24 +86,28 @@ php_enable_webserver: true
 # PHP-FPM configuration.
 php_enable_php_fpm: false
 
-# The executable to run when calling PHP from the command line.
-php_executable: "php"
+# OpCache settings.
+php_opcache_zend_extension: "opcache.so"
+php_opcache_enable: "0"
+
+# APCu settings.
+php_enable_apc: false
 
 # If this is set to false, none of the following options will have any effect.
 # Any and all changes to /etc/php.ini will be your responsibility.
 php_use_managed_ini: true
+
 php_max_input_vars: "10000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "Europe/Paris"
 
-# Install PHP from source (instead of using a package manager) with these vars.
-php_install_from_source: false
-
+  
+# MariaDB Vars
 # Set this to the user ansible is logging in as - should have root
 # or sudo access
-mysql_user_home: /root
-mysql_user_name: admin
+mysql_user_home: /home/vagrant
+mysql_user_name: vagrant
 mysql_user_password: root
 
 # The default root user installed by mysql - almost always root
@@ -119,22 +124,38 @@ mysql_enabled_on_startup: true
 # Whether my.cnf should be updated on every run.
 overwrite_global_mycnf: true
 
-# The following variables have a default value depending on operating system.
-# mysql_config_file: /etc/my.cnf
-# mysql_config_include_dir: /etc/my.cnf.d
-
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
 # for RedHat systems (and derivatives).
-mysql_enablerepo: ""
+mysql_enablerepo: ""  
 
-# Define a custom list of packages to install; if none provided, the default
-# package list from vars/[OS-family].yml will be used.
-mysql_packages:
-- default-mysql-server
-- python-mysqldb
+mysql_python_package_debian: python-mysqldb
 
-mysql_python_package_debian: python3-mysqldb
+# OS-sec Vars
+os_desktop_enable: false
+os_auth_pw_max_age: 9999
 
+
+# SSH-sec Vars
+ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
+ssh_authorized_keys_file: ''
+
+# ports on which ssh-server should listen
+ssh_server_ports: ['22']            # sshd
+
+# port to which ssh-client should connect
+ssh_client_port: '22'               # ssh
+
+# one or more ip addresses, to which ssh-server should listen to. Default is empty, but should be configured for security reasons!
+ssh_listen_to: ['0.0.0.0']          # sshd
+
+# Host keys to look for when starting sshd.
+ssh_host_key_files: []              # sshd
+
+# Specifies the host key algorithms that the server offers
+ssh_host_key_algorithms: []         # sshd
+
+
+# Apache-Sec Vars
 apache_servername: "msehr.local"
 
 
