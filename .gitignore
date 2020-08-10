@@ -1,7 +1,6 @@
 *.retry
 *~
 .fuse_hidden*
-# Linux trash folder which might appear on any partition or disk
 .Trash-*
 .nfs*
 .vagrant/
@@ -13,3 +12,6 @@
 !.vscode/extensions.json
 *.code-workspace
 .history
+hosts.yml
+.ssh
+Dockerfile

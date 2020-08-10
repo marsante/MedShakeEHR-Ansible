@@ -1,0 +1,21 @@
+[submodule "roles/OS-sec"]
+	path = roles/OS-sec
+	url = https://github.com/dev-sec/ansible-os-hardening.git
+[submodule "roles/SSH-sec"]
+	path = roles/SSH-sec
+	url = https://github.com/dev-sec/ansible-ssh-hardening.git
+[submodule "roles/MariaDB"]
+	path = roles/MariaDB
+	url = https://github.com/geerlingguy/ansible-role-mysql.git
+[submodule "roles/PHP"]
+	path = roles/PHP
+	url = https://github.com/geerlingguy/ansible-role-php.git
+[submodule "roles/OpenVPN"]
+	path = roles/OpenVPN
+	url = https://github.com/Stouts/Stouts.openvpn.git
+[submodule "roles/MariaDB-sec"]
+	path = roles/MariaDB-sec
+	url = https://github.com/dev-sec/ansible-mysql-hardening.git
+[submodule "roles/Apache"]
+	path = roles/Apache
+	url = https://github.com/geerlingguy/ansible-role-apache.git
