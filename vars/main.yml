@@ -153,14 +153,3 @@ ssh_host_key_files: []              # sshd
 
 # Specifies the host key algorithms that the server offers
 ssh_host_key_algorithms: []         # sshd
-
-
-# Apache-Sec Vars
-apache_servername: "msehr.local"
-
-apache_modules_to_disable: []
-
-
-
-
-

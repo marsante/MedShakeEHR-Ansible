@@ -8,7 +8,7 @@
   roles:
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: Apache, tags: ['Apache', 'base', 'minimal'] }
-    #- { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
+    - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     - { role: PHP, tags: ['PHP', 'base', 'minimal'] }
     - { role: AutoUpgrades, tags: ['AutoUpgrades', 'security', 'base'] }
     - { role: OS-sec, tags: ['OS-sec', 'security', 'base'] }
