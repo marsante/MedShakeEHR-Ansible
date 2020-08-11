@@ -20,9 +20,9 @@ A faire :
 - ?
 
 ## Pré-requis
-Ansible > 2.5
-Ansible > 2.9 pour le rôle SSH-sec
-Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
+- Ansible > 2.5
+-  Ansible > 2.9 pour le rôle SSH-sec
+- Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
 
 ## Installation 
 - Cloner le projet avec les subdomules :
