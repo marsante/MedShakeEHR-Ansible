@@ -8,18 +8,34 @@
 
 - name: Create ehr folders
   file:
-    path: "{{ documentpublic }}"
+    path: "{{ msehrPath }}/public_html"
     state: directory
     recurse: yes
     owner: www-data
     group: www-data
-    mode: '0775'
-
-- name: Download self installer
-  get_url:
-    url: https://raw.githubusercontent.com/MedShake/MedShakeEHR-base/master/installer/self-installer.php
-    dest: "{{ documentpublic }}"
-    owner: www-data
-    group: www-data
     mode: '0755'
+
+- name: install template for latest release
+  template:
+    src: templates/latestRelease.sh.j2
+    dest: /tmp/latestRelease.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Run script for latest release
+  command: /tmp/latestRelease.sh
+
+- name: Composer upgrade on /ehr
+  composer:
+    command: upgrade
+    working_dir: "{{ msehrPath }}"
+
+- name: Composer upgrade on /ehr/public_html
+  composer:
+    command: upgrade
+    working_dir: "{{ msehrPath }}/public_html"
+
+
+  
 
