@@ -1,0 +1,12 @@
+---
+galaxy_info:
+    author: "Michaël Val"
+    description: 'This Ansible playbook install and secure MedShakeEHR server'
+    license: GPL-3.0-only
+    min_ansible_version: '2.9'
+    platforms:
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+dependencies: []
