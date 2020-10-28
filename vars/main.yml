@@ -1,11 +1,9 @@
 ---
 # Playbook Vars
-
 user: vagrant
 
 
 # MedShakeEHR Vars
-
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
@@ -49,6 +47,7 @@ apache_mods_enabled:
   - headers.load
   - ssl.load
 apache_mods_disabled: []
+
 
 #PHP Vars
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
@@ -116,6 +115,7 @@ overwrite_global_mycnf: true
 mysql_enablerepo: ""  
 
 mysql_python_package_debian: python-mysqldb
+
 
 # OS-sec Vars
 os_desktop_enable: false

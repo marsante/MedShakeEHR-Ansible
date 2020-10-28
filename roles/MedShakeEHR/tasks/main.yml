@@ -35,7 +35,3 @@
   composer:
     command: upgrade
     working_dir: "{{ msehrPath }}/public_html"
-
-
-  
-
