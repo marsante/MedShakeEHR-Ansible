@@ -25,17 +25,20 @@ A faire :
 - Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
 
 ## Installation 
-- Cloner le projet avec les subdomules :
-`git clone --recursive https://github.com/marsante/MedShakeEHR-Ansible.git`
-
+- Cloner le projet et installer les rôles :
+```bash
+git clone https://github.com/marsante/MedShakeEHR-Ansible.git
+cd MedShakeEHR-Ansible
+ansible-galaxy install -r requirements.yml 
+```
 - Configurer les variables dans le dossier `variables/main.yml`
 
 - Si vous souhaitez versionner publiquement le projet créez un fichier `secret.yml`, déplacez toutes les variables sensibles dedans et ajoutez le fichier à `playbook.yml`
 
-- Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>`
+- Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>` ou via un fichier `host.yml` : `ansible-playbook -i hosts.yml  --user=<user> playbook.yml`
 
 ## Variables
-Les variables des rôles `Apache`, `MariaDB`, `MariaDB-sec`, `OpenVPN`, `OS-sec`, `PHP`, `SSH-sec`, sont décrites dans le `README` de chaque submodule.
+Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerlingguy.firewall`, `jnv.unattended-upgrades`, `geerlingguy.apache`, `geerlingguy.php`, `geerlingguy.mysql`, `dev-sec.mysql-hardening`, sont décrites dans les `README` des projets sur Github.
 
 |Nom  | Valeurs par défaut | Description  |
 |---- | ------------------ | ------------ |  
@@ -52,12 +55,8 @@ La configuration n'est que semi-automatique. Pour commencer, décommenter la var
         documentroot: "/var/www/html"
         certificate_file: "/home/vagrant/example.crt"
         certificate_key_file: "/home/vagrant/example.key"
-        certificate_chain_file: "/path/to/certificate_chain.crt"
-        extra_parameters: |
-          RewriteCond %{HTTP_HOST} !^www\. [NC]
-          RewriteRule ^(.*)$ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 ```
-Modifier les différentes informations pour que cela corresponde à l'usage. Il faut générer sur l'ordinateur controlant Ansible le certificat puis indiquer le chemin d'accès aux fichiers pour les variables `certificate_file`, `certificate_key_file`, `certificate_chain_file`.
+Modifier les différentes informations pour que cela corresponde à l'usage. Il faut générer sur le serveur le certificat puis indiquer le chemin d'accès aux fichiers pour les variables `certificate_file`, `certificate_key_file` sur l'ordinateur client.
 
 ## Auteurs et Licence
 

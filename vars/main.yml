@@ -3,12 +3,45 @@
 user: vagrant
 
 
-# MedShakeEHR Vars
-timezone: "Europe/Paris"
-msehrPath: "/home/ehr"
+# dev-sec.os-hardening Vars
+os_desktop_enable: false
+os_auth_pw_max_age: 9999
+# Do not delete the following line or otherwise the playbook will fail
+# at task 'create a combined sysctl-dict if overwrites are defined'
+sysctl_overwrite:
+
+# dev-sec.ssh-hardening Vars
+ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
+ssh_authorized_keys_file: ''
+
+# ports on which ssh-server should listen
+ssh_server_ports: ['22']            # sshd
+
+# port to which ssh-client should connect
+ssh_client_port: '22'               # ssh
+
+# one or more ip addresses, to which ssh-server should listen to. Default is empty, but should be configured for security reasons!
+ssh_listen_to: ['0.0.0.0']          # sshd
+
+# Host keys to look for when starting sshd.
+ssh_host_key_files: []              # sshd
+
+# Specifies the host key algorithms that the server offers
+ssh_host_key_algorithms: []         # sshd
 
 
-# Apache Vars
+# Vars geerlingguy.firewall
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+  - "443"
+
+
+# jnv.unattended-upgrades Vars
+unattended_remove_unused_dependencies: true
+
+
+# geerlingguy.apache Vars
 apache_enablerepo: ""
 
 apache_listen_ip: "*"
@@ -49,7 +82,7 @@ apache_mods_enabled:
 apache_mods_disabled: []
 
 
-#PHP Vars
+# geerlingguy.php Vars
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
 # for RHEL/CentOS.
 php_enablerepo: ""
@@ -89,7 +122,7 @@ php_post_max_size: "32M"
 php_date_timezone: "Europe/Paris"
 
   
-# MariaDB Vars
+# geerlingguy.mysql Vars
 # Set this to the user ansible is logging in as - should have root
 # or sudo access
 mysql_user_home: /home/vagrant
@@ -116,27 +149,13 @@ mysql_enablerepo: ""
 
 mysql_python_package_debian: python-mysqldb
 
+# Databases.
+mysql_databases: 
+   - name: medshakeehr
+     collation: utf8_general_ci
+     encoding: utf8
+     replicate: 1
 
-# OS-sec Vars
-os_desktop_enable: false
-os_auth_pw_max_age: 9999
-
-
-# SSH-sec Vars
-ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
-ssh_authorized_keys_file: ''
-
-# ports on which ssh-server should listen
-ssh_server_ports: ['22']            # sshd
-
-# port to which ssh-client should connect
-ssh_client_port: '22'               # ssh
-
-# one or more ip addresses, to which ssh-server should listen to. Default is empty, but should be configured for security reasons!
-ssh_listen_to: ['0.0.0.0']          # sshd
-
-# Host keys to look for when starting sshd.
-ssh_host_key_files: []              # sshd
-
-# Specifies the host key algorithms that the server offers
-ssh_host_key_algorithms: []         # sshd
+# MedShakeEHR Vars
+timezone: "Europe/Paris"
+msehrPath: "/home/ehr"
