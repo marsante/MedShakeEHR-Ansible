@@ -35,3 +35,56 @@
   composer:
     command: upgrade
     working_dir: "{{ msehrPath }}/public_html"
+
+
+- name: install pyOpenSSL
+  pip:
+    name: pyOpenSSL
+    state: present
+
+- name: Creates SSL directory
+  file:
+    path: "/etc/ssl/{{ domain }}"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+    
+- name: create private key
+  openssl_privatekey:
+    path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    state: present
+
+- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  openssl_csr:
+    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    country_name: "{{ countryName }}"
+    locality_name: "{{ localityName }}"
+    organization_name: "{{ organizationName }}"
+    email_address: "{{ emailAdress }}"
+    common_name: "{{ domain }}"
+    state: present
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
+    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    provider: selfsigned
+    valid_in: 315360000 
+    state: present
+
+- name: remove pyOpenSSL
+  pip:
+    name: pyOpenSSL
+    state: absent
+
+- name: remove pip
+  apt: 
+    name: python-pip
+    state: absent
+    autoclean: yes
+    autoremove: yes

@@ -44,19 +44,11 @@ Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerl
 |---- | ------------------ | ------------ |  
 |timezone | Europe/Paris | Mettre à l'heure le serveur |
 |msehr_package | ['ghostscript', 'imagemagick', 'pdftk', git', 'curl', 'composer', 'ntp'] | Installer les dépendances de MSEHR |
-documentpublic | /home/ehr/public_html | Dossier public de MSEHR |
-
-### Variable pour https
-La configuration n'est que semi-automatique. Pour commencer, décommenter la variable suivante dans `vars/main.yml` :
-
-```bash
-    apache_vhosts_ssl:
-      - servername: "local.dev"
-        documentroot: "/var/www/html"
-        certificate_file: "/home/vagrant/example.crt"
-        certificate_key_file: "/home/vagrant/example.key"
-```
-Modifier les différentes informations pour que cela corresponde à l'usage. Il faut générer sur le serveur le certificat puis indiquer le chemin d'accès aux fichiers pour les variables `certificate_file`, `certificate_key_file` sur l'ordinateur client.
+|documentpublic | /home/ehr/public_html | Dossier public de MSEHR |
+| countryName | FR | le code de votre pays pour le certificat |
+| localityName | Paris | Votre ville pour le certificat |
+| organizationName | Dr Strange | Votre raison sociale pour le certificat |
+| emailAdress | email@domain.tld | Votre adresse mail pour le cerificat |
 
 ## Auteurs et Licence
 

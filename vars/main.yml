@@ -1,6 +1,7 @@
 ---
 # Playbook Vars
 user: vagrant
+domain: msehr.local
 
 
 # dev-sec.os-hardening Vars
@@ -62,13 +63,13 @@ apache_vhosts:
   - servername: "msehr.local"
     documentroot: "/home/ehr/public_html/"
   
-apache_vhosts_ssl: []
-# Additional properties:
-# 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-# - servername: "local.dev",
-#   documentroot: "/var/www/html",
-#   certificate_file: "/path/to/certificate.crt",
-#   certificate_key_file: "/path/to/certificate.key",
+apache_vhosts_ssl:
+#  Additional properties:
+#  'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  - servername: "msehr.local"
+    documentroot: "/home/ehr/public_html/"
+    certificate_file: "/etc/ssl/msehr.local/msehr.local.pem"
+    certificate_key_file: "/etc/ssl/msehr.local/msehr.local.key"
 #   # Optional.
 #   certificate_chain_file: "/path/to/certificate_chain.crt"
 
@@ -159,3 +160,9 @@ mysql_databases:
 # MedShakeEHR Vars
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
+
+certPrivateKeyPassword: certPrivateKeyPassword
+countryName: FR
+localityName: Paris
+organizationName: Dr Strange
+emailAdress: email@domain.tld

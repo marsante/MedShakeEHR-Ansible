@@ -1,4 +1,8 @@
 ---
 timezone: "Europe/Paris"
-msehr_package: ['ghostscript', 'imagemagick', 'pdftk', 'git', 'curl', 'composer', 'ntp', 'wget']
+msehr_package: ['ghostscript', 'imagemagick', 'pdftk', 'python-pip', 'git', 'curl', 'composer', 'ntp', 'wget']
 msehrPath: "/home/ehr"
+countryName: FR
+localityName: Paris
+organizationName: Dr Strange
+emailAdress: email@domain.tld
