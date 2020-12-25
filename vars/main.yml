@@ -160,9 +160,14 @@ mysql_databases:
 # MedShakeEHR Vars
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
+# Grub for Vagrant
+msehr_package: ['composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python-pip','wget']
 
 certPrivateKeyPassword: certPrivateKeyPassword
 countryName: FR
 localityName: Paris
 organizationName: Dr Strange
 emailAdress: email@domain.tld
+
+orthancUser: user
+orthancPswd: orthancPswd

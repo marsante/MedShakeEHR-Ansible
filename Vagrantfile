@@ -13,14 +13,14 @@ Vagrant.configure("2") do |config|
     end
     
     config.vm.define 'medshakeansible' do |node|
-      node.vm.hostname ='medshake.local'
+      node.vm.hostname ='msehr.local'
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "playbook.yml"
       end
 
     # Configure private network
     config.vm.network "private_network", ip: "55.55.55.5"  
-    # or public network, for Dicom, Phonecapture or VPN functionality  
+    # or public network, for Phonecapture or VPN functionality  
     #config.vm.network "public_network"   
     end
   end

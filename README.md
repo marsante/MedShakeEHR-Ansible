@@ -8,15 +8,16 @@ Ce que le playbook fait :
 - Installation de MariaDB
 - Installation de PHP
 - Installation de MedShakeEHR
+- Installation d'Orthanc en localhost
 - Sécurisation d'Apache
 - Sécurisation de MariaDB
 - Sécurisation de PHP
 - Sécurisation de l'OS
 
 A faire :
-- Installation d'Orthanc
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
+- Installation d'Orthanc en réseau local
 - ?
 
 ## Pré-requis
