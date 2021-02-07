@@ -13,11 +13,6 @@
     mkdir -p {{ msehrPath }}/public_html
     version=$(echo $vversion | cut -f2 -d "v")
     mv -f /tmp/MedShakeEHR-base-$version/* {{ msehrPath }}
-    sed -i '1iSetEnv MEDSHAKEEHRPATH {{ msehrPath }}' {{ msehrPath }}/public_html/.htaccess
-
-# Réglages des bons droits utilisateurs
-    chown www-data:www-data -R {{ msehrPath }}
-    chmod 755 {{ msehrPath }} {{ msehrPath }}/public_html 
     
 # Nettoyage
 removeInstallFiles() {
