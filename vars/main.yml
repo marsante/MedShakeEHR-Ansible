@@ -3,6 +3,29 @@
 user: vagrant
 domain: msehr.local
 
+# MedShakeEHR Vars
+timezone: "Europe/Paris"
+msehrPath: "/home/ehr"
+
+msehr_package: ['composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python-pip','wget']
+
+msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
+# MsEHR version to get
+msehr_base_release: "7.1.1"
+# sha256 check sum for the getted file (integrity check for the downloaded file)
+msehr_base_checksum: "sha256:8f13f4f3d6e3de6c9d5e3c9de52dd3683909067d0b01c60d6cbf32e530526a2d"
+
+# generate the self signed certificate for medshake web access
+create_self_signed_cert: true
+# useless
+#certPrivateKeyPassword: certPrivateKeyPassword
+countryName: FR
+localityName: Paris
+organizationName: Dr Strange
+emailAdress: email@domain.tld
+
+orthancUser: user
+orthancPswd: orthancPswd
 
 # dev-sec.os-hardening Vars
 os_desktop_enable: false
@@ -24,12 +47,10 @@ ssh_client_port: '22'               # ssh
 # one or more ip addresses, to which ssh-server should listen to. Default is empty, but should be configured for security reasons!
 ssh_listen_to: ['0.0.0.0']          # sshd
 
-# Host keys to look for when starting sshd.
-ssh_host_key_files: []              # sshd
-
 # Specifies the host key algorithms that the server offers
 ssh_host_key_algorithms: []         # sshd
 
+ssh_permit_root_login: without-password
 
 # Vars geerlingguy.firewall
 firewall_allowed_tcp_ports:
@@ -52,7 +73,7 @@ apache_listen_port_ssl: 443
 apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 apache_vhosts_template: "vhosts.conf.j2"
-  
+
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: true
@@ -62,7 +83,7 @@ apache_vhosts:
   # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "msehr.local"
     documentroot: "/home/ehr/public_html/"
-  
+
 apache_vhosts_ssl:
 #  Additional properties:
 #  'serveradmin, serveralias, allow_override, options, extra_parameters'.
@@ -89,7 +110,7 @@ apache_mods_disabled: []
 php_enablerepo: ""
 
 php_packages: ['php', 'php-gd', 'php-intl', 'php-curl', 'php-zip', 'php-xml', 'php-imagick', 'php-imap', 'php-soap', 'php-mysql', 'php-json', 'php-yaml', 'php-gnupg']
-  
+
 # Default PHP version to install on Debian-based OSes (OS-specific).
 # php_default_version_debian: ""
 
@@ -122,8 +143,9 @@ php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "Europe/Paris"
 
-  
+
 # geerlingguy.mysql Vars
+
 # Set this to the user ansible is logging in as - should have root
 # or sudo access
 mysql_user_home: /home/vagrant
@@ -146,28 +168,23 @@ overwrite_global_mycnf: true
 
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
 # for RedHat systems (and derivatives).
-mysql_enablerepo: ""  
+mysql_enablerepo: ""
 
-mysql_python_package_debian: python-mysqldb
+# if we use python3 whith ansible
+# (required to manange ssl certficate whith ansible)
+mysql_python_package_debian: python3-mysqldb
+#mysql_python_package_debian: python-mysqldb
 
 # Databases.
-mysql_databases: 
+mysql_databases:
    - name: medshakeehr
      collation: utf8_general_ci
      encoding: utf8
      replicate: 1
 
-# MedShakeEHR Vars
-timezone: "Europe/Paris"
-msehrPath: "/home/ehr"
-# Grub for Vagrant
-msehr_package: ['composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python-pip','wget']
-
-certPrivateKeyPassword: certPrivateKeyPassword
-countryName: FR
-localityName: Paris
-organizationName: Dr Strange
-emailAdress: email@domain.tld
-
-orthancUser: user
-orthancPswd: orthancPswd
+mysql_users:
+  - name: medshakeehr
+    host: localhost
+    # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+    password: secret
+    priv: "medshakeehr.*:ALL"

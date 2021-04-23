@@ -3,18 +3,22 @@
   hosts: all
   vars_files:
     - vars/main.yml
-    
+
   roles:
     - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
     - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    # Must be placed before MedShakEHR because we need de data base exist to
+    # use cli installer
+    - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
+    - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
+    # Must be placed before geerlingguy.apache because it genrate ssl cert
+    # (else apache service won't be able to restart after the role execution)
+    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
-    - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
-    - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
-    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
 
   post_tasks:
