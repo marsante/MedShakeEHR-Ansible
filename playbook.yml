@@ -15,7 +15,7 @@
     - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
     - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
-    #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
+    - { role: kyl191.openvpn, tags: ['OpenVPN', 'security', 'VPN']}
 
   post_tasks:
     - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
