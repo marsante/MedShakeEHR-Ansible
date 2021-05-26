@@ -24,10 +24,10 @@
   when: not msehr.stat.exists
 
 - name: Creating MEDSHAKEEHRPATH file
-      copy:
-        dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
-        content: |
-          {{ msehrPath }}
+  copy:
+    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    content: |
+      {{ msehrPath }}
         
 - name: Add good permissions and ownership to medshakeehr folder
   ansible.builtin.file:
