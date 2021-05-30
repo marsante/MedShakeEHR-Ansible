@@ -7,18 +7,16 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python-pip','wget']
+msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-# MsEHR version to get
+# MSEHR version to get
 msehr_base_release: "7.1.1"
 # sha256 check sum for the getted file (integrity check for the downloaded file)
 msehr_base_checksum: "sha256:8f13f4f3d6e3de6c9d5e3c9de52dd3683909067d0b01c60d6cbf32e530526a2d"
 
 # generate the self signed certificate for medshake web access
 create_self_signed_cert: true
-# useless
-#certPrivateKeyPassword: certPrivateKeyPassword
 countryName: FR
 localityName: Paris
 organizationName: Dr Strange
@@ -170,10 +168,8 @@ overwrite_global_mycnf: true
 # for RedHat systems (and derivatives).
 mysql_enablerepo: ""
 
-# if we use python3 whith ansible
-# (required to manange ssl certficate whith ansible)
-mysql_python_package_debian: python3-mysqldb
-#mysql_python_package_debian: python-mysqldb
+
+mysql_python_package_debian: python-mysqldb
 
 # Databases.
 mysql_databases:
