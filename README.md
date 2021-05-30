@@ -14,13 +14,13 @@ Ce que le playbook fait :
 - Sécurisation de PHP
 - Sécurisation de l'OS
 
-A faire :
+À faire :
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
 - Installation d'Orthanc en réseau local
 - ?
 
-## Pré-requis
+## Prérequis
 - Ansible > 2.5
 -  Ansible > 2.9 pour le rôle SSH-sec
 - Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
@@ -34,7 +34,7 @@ ansible-galaxy install -r requirements.yml
 ```
 - Configurer les variables dans le dossier `variables/main.yml`
 
-- Si vous souhaitez versionner publiquement le projet créez un fichier `secret.yml`, déplacez toutes les variables sensibles dedans et ajoutez le fichier à `playbook.yml`
+- Si vous souhaitez versionner publiquement le projet, créez un fichier `secret.yml`, déplacez toutes les variables sensibles dedans et ajoutez le fichier à `playbook.yml`
 
 - Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>` ou via un fichier `host.yml` : `ansible-playbook -i hosts.yml  --user=<user> playbook.yml`
 
@@ -49,7 +49,7 @@ Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerl
 | countryName | FR | le code de votre pays pour le certificat |
 | localityName | Paris | Votre ville pour le certificat |
 | organizationName | Dr Strange | Votre raison sociale pour le certificat |
-| emailAdress | email@domain.tld | Votre adresse mail pour le cerificat |
+| emailAdress | email@domain.tld | Votre adresse mail pour le certificat |
 
 ## Auteurs et Licence
 
