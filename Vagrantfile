@@ -16,6 +16,9 @@ Vagrant.configure("2") do |config|
       node.vm.hostname ='msehr.local'
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "playbook.yml"
+        ansible.become = true
+        ansible.become_user = "root"
+
       end
 
     # Configure private network
