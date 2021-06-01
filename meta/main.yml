@@ -1,6 +1,7 @@
 ---
 galaxy_info:
     author: "Michaël Val"
+    contributors: "Indelog"
     description: 'This Ansible playbook install and secure MedShakeEHR server'
     license: GPL-3.0-only
     min_ansible_version: '2.9'

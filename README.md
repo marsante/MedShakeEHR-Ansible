@@ -54,8 +54,10 @@ Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerl
 | organizationName        | Dr Strange                                                               | Votre raison sociale pour le certificat                                                    |
 | emailAdress             | email@domain.tld                                                         | Votre adresse mail pour le certificat                                                       |
 
-## Auteurs et Licence
-
-* Auteur : Michaël Val
+## Auteur, Contributeurs et Licence
+- Auteur
+[![](https://github.com/marsante.png?size=50)](https://github.com/marsante)
+- Contributeurs
+[![](https://github.com/indelog.png?size=50)](https://github.com/indelog)
 
 Licence : GPL v3
