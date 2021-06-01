@@ -107,7 +107,7 @@ apache_mods_disabled: []
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php', 'php-gd', 'php-intl', 'php-curl', 'php-zip', 'php-xml', 'php-imagick', 'php-imap', 'php-soap', 'php-mysql', 'php-json', 'php-yaml', 'php-gnupg']
+php_packages: ['php', 'php-gd', 'php-intl', 'php-curl', 'php-zip', 'php-xml', 'php-imagick', 'php-imap','php-mbstring', 'php-soap', 'php-mysql', 'php-json', 'php-yaml', 'php-gnupg']
 
 # Default PHP version to install on Debian-based OSes (OS-specific).
 # php_default_version_debian: ""
