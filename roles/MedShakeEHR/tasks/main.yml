@@ -25,12 +25,17 @@
     dest: "/tmp/"
   when: not msehr.stat.exists
 
-- name: Install MedShakeEHR file
+- name: Creating MEDSHAKEEHRPATH file
   copy:
-    remote_src: yes
-    src: "/tmp/MedShakeEHR-base-{{ msehr_base_release }}/"
-    dest: "{{ msehrPath }}"
-    mode: "u=rwX,go=rX"
+    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    content: |
+      {{ msehrPath }}
+        
+- name: Add good permissions and ownership to medshakeehr folder
+  ansible.builtin.file:
+    path: "{{ msehrPath }}"
+    state: directory
+    recurse: yes
     owner: www-data
     group: www-data
   when: not msehr.stat.exists 

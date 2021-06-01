@@ -14,7 +14,7 @@ Ce que le playbook fait :
 - Sécurisation de PHP
 - Sécurisation de l'OS
 
-A faire :
+À faire :
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
 - Installation d'Orthanc en réseau local
