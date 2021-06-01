@@ -8,4 +8,6 @@ roles:
   - geerlingguy.php
   - geerlingguy.mysql
   - dev-sec.mysql-hardening
+  - geerlingguy.composer #remove after debian 10 EOL
+
 
