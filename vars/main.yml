@@ -7,7 +7,7 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
+msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
@@ -169,7 +169,7 @@ overwrite_global_mycnf: true
 mysql_enablerepo: ""
 
 
-mysql_python_package_debian: python-mysqldb
+mysql_python_package_debian: python3-mysqldb
 
 # Databases.
 mysql_databases:
