@@ -6,21 +6,23 @@
 - name: Install packages
   apt: name={{ msehr_package }} update_cache=yes state=latest
 
-- name:  check if MedShakeEHR exist
+- name:  check if MedShakeEHR installation is complete
   stat:
-    path: "{{ msehrPath }}/public_html"
-  register: msehr 
+    path: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+  register: msehr
 
-- name: install template for latest release
-  template:
-    src: templates/latestRelease.sh.j2
-    dest: /tmp/latestRelease.sh
-    owner: root
-    group: root
-    mode: '0755'
+- name: Get MedShakeEHR package
+  get_url:
+    url: "{{ msehr_base_repo_url }}v{{ msehr_base_release }}"
+    dest: "/tmp/msehr.tar.gz"
+    checksum: "{{ msehr_base_checksum }}"
+  when: not msehr.stat.exists
 
-- name: Run script for latest release
-  command: /tmp/latestRelease.sh
+- name: Extract MedShakeEHR package
+  unarchive:
+    src: "/tmp/msehr.tar.gz"
+    remote_src: yes
+    dest: "/tmp/"
   when: not msehr.stat.exists
 
 - name: Creating MEDSHAKEEHRPATH file
@@ -35,23 +37,32 @@
     state: directory
     recurse: yes
     owner: www-data
-    group: "{{ user }}"
-    mode: '0755'
-
+    group: www-data
+  when: not msehr.stat.exists 
+  
 - name: Composer upgrade on /ehr
-  composer:
-    command: upgrade
-    working_dir: "{{ msehrPath }}"
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  become: yes
+  become_user: www-data
+  when: not msehr.stat.exists
 
 - name: Composer upgrade on /ehr/public_html
-  composer:
-    command: upgrade
-    working_dir: "{{ msehrPath }}/public_html"
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  become: yes
+  become_user: www-data
+  when: not msehr.stat.exists
 
+- name: Execute MedShakeEHR cli installation script
+  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
+  become: yes
+  become_user: www-data
+  environment:
+    MEDSHAKEEHRPATH: "{{ msehrPath }}"
+  when: not msehr.stat.exists
 
-- name: install pyOpenSSL
-  pip:
-    name: pyOpenSSL
+- name: Ensure we have python3 lib for openssl
+  apt:
+    package: python3-openssl
     state: present
 
 - name: Creates SSL directory
@@ -63,11 +74,14 @@
     group: root
     mode: '0755'
     state: directory
-    
+  when: create_self_signed_cert and  not msehr.stat.exists
+
 - name: create private key
   openssl_privatekey:
     path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    size: 4096
     state: present
+  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Generate an OpenSSL Certificate Signing Request with Subject information
   openssl_csr:
@@ -79,6 +93,7 @@
     email_address: "{{ emailAdress }}"
     common_name: "{{ domain }}"
     state: present
+  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
@@ -86,8 +101,15 @@
     privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
     csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
     provider: selfsigned
-    valid_in: 315360000 
+    valid_in: "315360000"
     state: present
+  when: create_self_signed_cert and  not msehr.stat.exists
+
+- name: Clean the Certificate Signing Request
+  file:
+    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    state: absent
+  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Gather package facts
   package_facts:
@@ -102,14 +124,9 @@
     mode: 0644
   when: "'orthanc' in ansible_facts.packages"
 
-- name: remove pyOpenSSL
-  pip:
-    name: pyOpenSSL
-    state: absent
-
-- name: remove pip
-  apt: 
-    name: python-pip
-    state: absent
-    autoclean: yes
-    autoremove: yes
+- name: Creating MEDSHAKEEHRPATH file
+  copy:
+    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    content: |
+      {{ msehrPath }}
+  when: not msehr.stat.exists
