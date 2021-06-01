@@ -18,62 +18,42 @@
     checksum: "{{ msehr_base_checksum }}"
   when: not msehr.stat.exists
 
-- name: Extract MedShakeEHR packahe
+- name: Extract MedShakeEHR package
   unarchive:
     src: "/tmp/msehr.tar.gz"
     remote_src: yes
     dest: "/tmp/"
   when: not msehr.stat.exists
 
-- name: Installa MedShakeEHR file
+- name: Install MedShakeEHR file
   copy:
     remote_src: yes
     src: "/tmp/MedShakeEHR-base-{{ msehr_base_release }}/"
-    dest: "{{ msehrPath }}/"
+    dest: "{{ msehrPath }}"
     mode: "u=rwX,go=rX"
     owner: www-data
     group: www-data
-  when: not msehr.stat.exists
-
+  when: not msehr.stat.exists 
+  
 - name: Composer upgrade on /ehr
-  composer:
-    command: upgrade
-    working_dir: "{{ msehrPath }}"
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
   become: yes
   become_user: www-data
-  become_flags: "-s /bin/sh"
   when: not msehr.stat.exists
 
 - name: Composer upgrade on /ehr/public_html
-  composer:
-    command: upgrade
-    working_dir: "{{ msehrPath }}/public_html"
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
   become: yes
   become_user: www-data
-  become_flags: "-s /bin/sh"
   when: not msehr.stat.exists
 
 - name: Execute MedShakeEHR cli installation script
-  command: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
+  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
   become: yes
   become_user: www-data
-  become_flags: "-s /bin/sh"
   environment:
     MEDSHAKEEHRPATH: "{{ msehrPath }}"
   when: not msehr.stat.exists
-  #register: out_msehr_cli_install
-
-#- name: Debug msehr cli install
-  #debug:
-    #var: out_msehr_cli_install
-
-# No need to use this to fix the openssl lib error on Debian 10
-# The solution is to use python3 interpreter with ansible
-# (in ansible config use `interpreter_python = /usr/bin/python3`)
-#- name: install pyOpenSSL
-  #pip:
-    #name: pyOpenSSL
-    #state: present
 
 - name: Ensure we have python3 lib for openssl
   apt:
@@ -139,9 +119,6 @@
     mode: 0644
   when: "'orthanc' in ansible_facts.packages"
 
-# Executed at the end of medshake installation, checked by this role to verify
-# if EHR is installad. Create this file at the end permit to replay task if we
-# had an error in previous playbook execution.
 - name: Creating MEDSHAKEEHRPATH file
   copy:
     dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
