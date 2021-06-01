@@ -12,6 +12,7 @@
     - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
     - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
     - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
+    - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
