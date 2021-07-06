@@ -184,3 +184,41 @@ mysql_users:
     # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
     password: secret
     priv: "medshakeehr.*:ALL"
+
+#
+# EasyRsa Configuration
+#
+
+# This enable the service to send warn mail when a certificate will expire.
+# If you enable this ou will ensure your system is able to send email whith
+# send mail (with a tool like msmtp-mta).
+easyrsa_alert_renew_service: false
+# Name of the CA for MedShake
+easyrsa_ca_name: ca_medshake
+# Pass for CA private key
+easyrsa_ca_pass: "secret"
+
+#
+# Openvpn configuration
+#
+
+# VPN network
+openvpn_network: "10.42.42.0"
+# VPN netmask
+openvpn_netmask: "255.255.255.0"
+# List of VPN client
+# For each client :
+# - set a name (only alpha numeric characters whith no space)
+# - set a pass (for the private key of the certficate)
+# - set a ip (for ip of client in the vpn, must be in vpn network)
+# - if the client certficate is revoked add 'revoked: true'
+clients_medshake:
+  - name: drstrange
+    pass: 'secret'
+    ip: '10.42.42.10'
+  - name: drjekyll
+    pass: 'secret'
+    ip: '10.42.42.11'
+# This is the iface where the vpn server is listning
+# (used to get his ip)
+exposed_iface: eth0

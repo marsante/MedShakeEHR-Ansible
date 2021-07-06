@@ -1,5 +1,7 @@
 ---
-roles: 
+roles:
+  - git+https://framagit.org/indelog/ansible-role-easyrsa,v0.0.3
+  #- git+https://framagit.org/indelog/ansible-role-openvpn,v0.0.1
   - dev-sec.os-hardening
   - dev-sec.ssh-hardening
   - geerlingguy.firewall
@@ -9,5 +11,3 @@ roles:
   - geerlingguy.mysql
   - dev-sec.mysql-hardening
   - geerlingguy.composer #remove after debian 10 EOL
-
-
