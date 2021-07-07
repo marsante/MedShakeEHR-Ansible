@@ -70,18 +70,18 @@
             firewall_allowed_udp_ports: "{{ firewall_allowed_udp_ports|default([]) }} + [ {{ openvpn_port|default(1194) }} ]"
 
   roles:
-    #- { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
-    #- { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
-    #- { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
-    #- { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
-    #- { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
-    #- { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
-    #- { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
-    #- { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
-    #- { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
-    #- { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
-    #- { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
-    #- { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
+    - { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
+    - { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
+    - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
+    - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
+    - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
+    - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
+    - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
+    - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
+    - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
+    - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
+    - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
 
   post_tasks:

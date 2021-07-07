@@ -131,6 +131,11 @@
       {{ msehrPath }}
   when: not msehr.stat.exists
 
+- name: Ensure install script is absent
+  file:
+    path: "{{ msehrPath }}/public_html/install.php"
+    state: absent
+
 - name: Config apache for MedShakeEHR
   block:
   - name: Log dir for MedShake (www-data must can read this file or directory)

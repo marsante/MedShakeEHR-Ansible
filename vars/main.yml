@@ -7,7 +7,7 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
+msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget', 'dcmtk']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
@@ -75,6 +75,9 @@ apache_create_vhosts: false
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: true
 
+#
+# Apache config for MedShakeEHR is now managed by MedShakeEHR role
+# (need custom template to restrict acces for VPN only)
 #apache_vhosts:
   ## Additional properties:
   ## 'serveradmin, serveralias, allow_override, options, extra_parameters'.
@@ -136,7 +139,7 @@ php_enable_apc: false
 # Any and all changes to /etc/php.ini will be your responsibility.
 php_use_managed_ini: true
 
-php_max_input_vars: "10000"
+php_max_input_vars: "20000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "Europe/Paris"
