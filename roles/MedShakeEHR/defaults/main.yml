@@ -12,3 +12,4 @@ organizationName: Dr Strange
 emailAdress: email@domain.tld
 orthancUser: user
 orthancPswd: orthancPswd
+only_vpn_access: true

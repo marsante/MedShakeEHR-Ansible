@@ -48,7 +48,7 @@
   when: not msehr.stat.exists
 
 - name: Execute MedShakeEHR cli installation script
-  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
+  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D \"{{ effective_domain }}\""
   become: yes
   become_user: www-data
   environment:
@@ -121,7 +121,7 @@
     dest: "/etc/orthanc/orthanc.json"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: "'orthanc' in ansible_facts.packages"
 
 - name: Creating MEDSHAKEEHRPATH file
@@ -130,3 +130,33 @@
     content: |
       {{ msehrPath }}
   when: not msehr.stat.exists
+
+- name: Config apache for MedShakeEHR
+  block:
+  - name: Log dir for MedShake (www-data must can read this file or directory)
+    file:
+      path: /var/log/medshake/
+      mode: "0770"
+      owner: www-data
+      group: www-data
+      state: directory
+  - name: Log dir for MedShake (www-data must can read this file or directory)
+    copy:
+      src: logrotate-medshake
+      dest: /etc/logrotate.d/medshake
+      mode: "0644"
+      owner: root
+      group: root
+  - name: Create apache config for MedShakeEHR
+    template:
+      src: apache-medshake.conf.j2
+      dest: /etc/apache2/sites-available/medshake.conf
+      owner: root
+      group: root
+      mode: "0644"
+    notify: restart apache
+  - name: Ensure conf apache for MedShakeEHR is enabled
+    command: /usr/sbin/a2ensite medshake.conf
+    args:
+      creates: /etc/apache2/sites-enabled/medshake.conf
+

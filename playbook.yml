@@ -49,10 +49,11 @@
             openvpn_server:
             - name: "medshake"
               enabled: true
-              remote: "{{ ansible_facts[exposed_iface].ipv4.address }}"
+              remote: "{{ openvpn_remote|default(ansible_facts[exposed_iface].ipv4.address) }}"
               cn: "OpenvpnEHR"
               cli_privkey_dir: "/etc/easyrsa/ca_medshake/pki/private/"
               cli_cert_dir: "/etc/easyrsa/ca_medshake/pki/issued/"
+              port: "{{ openvpn_port|default(1194) }}"
               conf:
                 network: "{{ openvpn_network }}"
                 netmask: "{{ openvpn_netmask }}"
@@ -61,21 +62,27 @@
                 key: "/etc/easyrsa/ca_medshake/pki/private/openvpn.key"
                 crl_file: "/etc/easyrsa/ca_medshake/pki/crl.pem"
               clients: "{{ openvpn_clients_list }}"
+        - name: Set effective domain
+          set_fact:
+            effective_domain: "{{ openvpn_network|regex_replace('([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})\\.[0-9]{1,3}', '\\1.1') if only_vpn_access else domain }}"
+        - name: Add openvpn port to firewall_allowed_udp_ports
+          set_fact:
+            firewall_allowed_udp_ports: "{{ firewall_allowed_udp_ports|default([]) }} + [ {{ openvpn_port|default(1194) }} ]"
 
   roles:
-    - { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
-    - { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
-    - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
-    - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
-    - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
-    - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
-    - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
-    - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
-    - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
-    - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
-    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
+    #- { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
+    #- { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
+    #- { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
+    #- { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
+    #- { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
+    #- { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    #- { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
+    #- { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
+    #- { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
+    #- { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
     #- { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
-    - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
+    #- { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
+    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
 
   post_tasks:
     - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
