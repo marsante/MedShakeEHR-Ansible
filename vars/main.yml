@@ -87,8 +87,8 @@ apache_vhosts_ssl:
 #  'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "msehr.local"
     documentroot: "/home/ehr/public_html/"
-    certificate_file: "/etc/ssl/msehr.local/msehr.local.pem"
-    certificate_key_file: "/etc/ssl/msehr.local/msehr.local.key"
+    certificate_file: "/etc/easyrsa/ca_medshake/pki/issued/apache.crt"
+    certificate_key_file: "/etc/easyrsa/ca_medshake/pki/private/apache.key"
 #   # Optional.
 #   certificate_chain_file: "/path/to/certificate_chain.crt"
 
@@ -194,7 +194,6 @@ mysql_users:
 # send mail (with a tool like msmtp-mta).
 easyrsa_alert_renew_service: false
 # Name of the CA for MedShake
-easyrsa_ca_name: ca_medshake
 # Pass for CA private key
 easyrsa_ca_pass: "secret"
 

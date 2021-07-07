@@ -33,16 +33,16 @@
     mode: "u=rwX,go=rX"
     owner: www-data
     group: www-data
-  when: not msehr.stat.exists 
-  
+  when: not msehr.stat.exists
+
 - name: Composer upgrade on /ehr
-  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache
   become: yes
   become_user: www-data
   when: not msehr.stat.exists
 
 - name: Composer upgrade on /ehr/public_html
-  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache
   become: yes
   become_user: www-data
   when: not msehr.stat.exists
@@ -55,56 +55,61 @@
     MEDSHAKEEHRPATH: "{{ msehrPath }}"
   when: not msehr.stat.exists
 
-- name: Ensure we have python3 lib for openssl
-  apt:
-    package: python3-openssl
-    state: present
+#
+# No longer required
+# The certificate is no created by ansible-easy-rsa role
+#
 
-- name: Creates SSL directory
-  file:
-    path: "/etc/ssl/{{ domain }}"
-    state: directory
-    recurse: yes
-    owner: root
-    group: root
-    mode: '0755'
-    state: directory
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Ensure we have python3 lib for openssl
+  #apt:
+    #package: python3-openssl
+    #state: present
 
-- name: create private key
-  openssl_privatekey:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    size: 4096
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Creates SSL directory
+  #file:
+    #path: "/etc/ssl/{{ domain }}"
+    #state: directory
+    #recurse: yes
+    #owner: root
+    #group: root
+    #mode: '0755'
+    #state: directory
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
-- name: Generate an OpenSSL Certificate Signing Request with Subject information
-  openssl_csr:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    country_name: "{{ countryName }}"
-    locality_name: "{{ localityName }}"
-    organization_name: "{{ organizationName }}"
-    email_address: "{{ emailAdress }}"
-    common_name: "{{ domain }}"
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: create private key
+  #openssl_privatekey:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #size: 4096
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
-- name: Generate a Self Signed OpenSSL certificate
-  openssl_certificate:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    provider: selfsigned
-    valid_in: "315360000"
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  #openssl_csr:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #country_name: "{{ countryName }}"
+    #locality_name: "{{ localityName }}"
+    #organization_name: "{{ organizationName }}"
+    #email_address: "{{ emailAdress }}"
+    #common_name: "{{ domain }}"
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
-- name: Clean the Certificate Signing Request
-  file:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    state: absent
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Generate a Self Signed OpenSSL certificate
+  #openssl_certificate:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
+    #privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #provider: selfsigned
+    #valid_in: "315360000"
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
+
+#- name: Clean the Certificate Signing Request
+  #file:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #state: absent
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Gather package facts
   package_facts:

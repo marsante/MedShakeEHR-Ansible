@@ -26,7 +26,7 @@
         - name: Configure EasyRSA configure CA
           set_fact:
             easyrsa_ca_list:
-            - name: "{{ easyrsa_ca_name }}"
+            - name: ca_medshake
               pass: "{{ easyrsa_ca_pass }}"
               gen_dh: false
               conf:
@@ -51,20 +51,20 @@
               enabled: true
               remote: "{{ ansible_facts[exposed_iface].ipv4.address }}"
               cn: "OpenvpnEHR"
-              cli_privkey_dir: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/private/"
-              cli_cert_dir: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/issued/"
+              cli_privkey_dir: "/etc/easyrsa/ca_medshake/pki/private/"
+              cli_cert_dir: "/etc/easyrsa/ca_medshake/pki/issued/"
               conf:
                 network: "{{ openvpn_network }}"
                 netmask: "{{ openvpn_netmask }}"
-                ca: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/ca.crt"
-                cert: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/issued/openvpn.crt"
-                key: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/private/openvpn.key"
-                crl_file: "/etc/easyrsa/{{ easyrsa_ca_name }}/pki/crl.pem"
+                ca: "/etc/easyrsa/ca_medshake/pki/ca.crt"
+                cert: "/etc/easyrsa/ca_medshake/pki/issued/openvpn.crt"
+                key: "/etc/easyrsa/ca_medshake/pki/private/openvpn.key"
+                crl_file: "/etc/easyrsa/ca_medshake/pki/crl.pem"
               clients: "{{ openvpn_clients_list }}"
 
   roles:
-    - { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'pki'] }
-    - { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'VPN'] }
+    - { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
+    - { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
     - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
@@ -74,9 +74,8 @@
     - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
     - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
-    - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
+    #- { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
-    - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
 
   post_tasks:
     - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
