@@ -1,6 +1,6 @@
 ---
 timezone: "Europe/Paris"
-msehr_package: ['acp','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
+msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
 msehrPath: "/home/ehr"
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 msehr_base_release: "7.1.1"

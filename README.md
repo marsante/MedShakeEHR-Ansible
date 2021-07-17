@@ -44,7 +44,7 @@ Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerl
 | Nom                     | Valeurs par défaut                                                       | Description                                                                                |
 | ----                    | ------------------                                                       | ------------                                                                               |
 | timezone                | Europe/Paris                                                             | Mettre à l'heure le serveur                                                                |
-| msehr_package           | ['ghostscript', 'imagemagick', 'pdftk', git', 'curl', 'composer', 'ntp'] | Installer les dépendances de MSEHR                                                         |
+| msehr_package           | ['acl','curl', 'ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget'] | Installer les dépendances de MSEHR                                                         |
 | msehr_base_repo_url     | https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/  | Url du dépôt où récupérer l'archive MsEHR                                                   |
 | msehr_base_release      | 7.1.1                                                                    | Version de l'archive à récupérer (sans le préfixe `v`)                                     |
 | msehr_base_checksum     | sha256:8f13f4f3d6e3de6c9d5e3c9de52dd3683909067d0b01c60d6cbf32e530526a2d  | Somme de contrôle à effectuer sur l'archive récupérer                                      |

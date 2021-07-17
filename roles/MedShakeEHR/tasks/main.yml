@@ -39,13 +39,11 @@
   shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
   become: yes
   become_user: www-data
-  when: not msehr.stat.exists
 
 - name: Composer upgrade on /ehr/public_html
   shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
   become: yes
   become_user: www-data
-  when: not msehr.stat.exists
 
 - name: Execute MedShakeEHR cli installation script
   shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
@@ -54,11 +52,6 @@
   environment:
     MEDSHAKEEHRPATH: "{{ msehrPath }}"
   when: not msehr.stat.exists
-
-- name: Ensure we have python3 lib for openssl
-  apt:
-    package: python3-openssl
-    state: present
 
 - name: Creates SSL directory
   file:
@@ -105,10 +98,6 @@
     path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
     state: absent
   when: create_self_signed_cert and  not msehr.stat.exists
-
-- name: Gather package facts
-  package_facts:
-    manager: apt
 
 - name: Setup orthanc configuration.
   template:
