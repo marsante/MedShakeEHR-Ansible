@@ -1,0 +1,45 @@
+<VirtualHost {% if only_vpn_access %}{{ effective_domain }}{% else %}*{% endif %}:80>
+    ServerAdmin	{{ emailAdress }}
+{% if only_vpn_access %}
+    ServerName {{ domain }}
+{% endif %}
+    RedirectMatch permanent ^(.*)/$ https://{{ effective_domain }}/$1
+</VirtualHost>
+
+<VirtualHost {% if only_vpn_access %}{{ effective_domain }}{% else %}*{% endif %}:443>
+
+    ServerAdmin	{{ emailAdress }}
+{% if not only_vpn_access %}
+    ServerName  {{ domain }}
+{% endif %}
+
+    SSLEngine On
+    SSLCertificateFile /etc/easyrsa/ca_medshake/pki/issued/apache.crt
+    SSLCertificateKeyFile /etc/easyrsa/ca_medshake/pki/private/apache.key
+
+    DocumentRoot {{ msehrPath }}/public_html/
+    DirectoryIndex index.php
+
+    CookieName apacheLogUserID
+    # TODO: It not work with an ip (for vpn direct access)
+    CookieDomain .{{ effective_domain }}
+    Define MEDSHAKEEHRLOGFILE /var/log/medshake/access.log
+    SetEnv MEDSHAKEEHRLOGFILE ${MEDSHAKEEHRLOGFILE}
+    LogFormat "{% raw %}%{%Y-%m-%d %H:%M:%S}t{% endraw %} %{c}a %r %{Cookie}n" usertrack
+    SetEnvIf Request_URI "\.png$|\.gif$|\.jpg$|\.svg$|\.js$|\.css$|\.map$|\.ico$|\.woff2" do_not_log
+    CustomLog ${MEDSHAKEEHRLOGFILE} usertrack env=!do_not_log
+    
+    RewriteEngine On
+    
+    <Directory {{ msehrPath }}/public_html/>
+        SetEnv MEDSHAKEEHRPATH {{ msehrPath }}
+        Require all granted
+        Options FollowSymLinks
+        AllowOverride all
+    </Directory>
+
+     <FilesMatch "composer.(json|lock)">
+         Require all denied
+     </FilesMatch>
+
+</VirtualHost>

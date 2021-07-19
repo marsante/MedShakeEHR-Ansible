@@ -1,7 +1,7 @@
 ---
 roles:
-  - git+https://framagit.org/indelog/ansible-role-easyrsa,v0.0.3
-  - git+https://framagit.org/indelog/ansible-role-openvpn,v0.0.1
+  - git+https://framagit.org/indelog/ansible-role-easyrsa,v0.0.4
+  - git+https://framagit.org/indelog/ansible-role-openvpn,v0.0.2
   - dev-sec.os-hardening
   - dev-sec.ssh-hardening
   - geerlingguy.firewall

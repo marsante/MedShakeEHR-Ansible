@@ -198,6 +198,7 @@ mysql_users:
 easyrsa_alert_renew_service: false
 # Name of the CA for MedShake
 # Pass for CA private key
+# /!\ REPLACE THIS WITH YOUR OWN PASSWORD
 easyrsa_ca_pass: "secret"
 
 #
@@ -218,13 +219,16 @@ clients_medshake:
   - name: drstrange
     pass: 'secret'
     ip: '10.42.42.10'
+#   renew: false            # disable client certificate renew when re-play the playbook (occurs only when certificate is expired)
+#   revoked: true           # revoke the EasyRSA certificate for the client (avoid it to connect to the VPN)
   - name: drjekyll
     pass: 'secret'
     ip: '10.42.42.11'
 # This is the iface where the vpn server is listning
-# (used to get his ip)
+# (used to get his ip quickly when test with Vagrant, for production usage use
+# openvpn_remote)
 exposed_iface: eth0
-# If is set use this remote adresse reather than ip of exposed_iface
+# Set "remote" for config generated for OpenVPN clients
 #openvpn_remote: xxx.xxx.xxx.xxx
 
 # If is true, MedShakeEHR will only accessible by the VPN network
