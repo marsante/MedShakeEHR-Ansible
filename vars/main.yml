@@ -7,7 +7,7 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget', 'dcmtk']
+msehr_package: ['acl','curl','dcmtk','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
@@ -55,6 +55,7 @@ firewall_allowed_tcp_ports:
   - "22"
   - "80"
   - "443"
+  - "1194"
 
 # jnv.unattended-upgrades Vars
 unattended_remove_unused_dependencies: true
@@ -193,7 +194,7 @@ mysql_users:
 #
 
 # This enable the service to send warn mail when a certificate will expire.
-# If you enable this ou will ensure your system is able to send email whith
+# If you enable this you will ensure your system is able to send email with
 # send mail (with a tool like msmtp-mta).
 easyrsa_alert_renew_service: false
 # Name of the CA for MedShake
@@ -211,10 +212,10 @@ openvpn_network: "10.42.42.0"
 openvpn_netmask: "255.255.255.0"
 # List of VPN client
 # For each client :
-# - set a name (only alpha numeric characters whith no space)
-# - set a pass (for the private key of the certficate)
+# - set a name (only alpha numeric characters with no space)
+# - set a pass (for the private key of the certificate)
 # - set a ip (for ip of client in the vpn, must be in vpn network)
-# - if the client certficate is revoked add 'revoked: true'
+# - if the client certificate is revoked add 'revoked: true'
 clients_medshake:
   - name: drstrange
     pass: 'secret'
@@ -224,7 +225,7 @@ clients_medshake:
   - name: drjekyll
     pass: 'secret'
     ip: '10.42.42.11'
-# This is the iface where the vpn server is listning
+# This is the iface where the vpn server is listening
 # (used to get his ip quickly when test with Vagrant, for production usage use
 # openvpn_remote)
 exposed_iface: eth0
@@ -233,6 +234,6 @@ exposed_iface: eth0
 
 # If is true, MedShakeEHR will only accessible by the VPN network
 # Is greatly recommended to keep this at 'true' if the MedShake instance
-# is accèsible by sevral client (not only by the poste which host the
+# is accessible by several client (not only by the post which host the
 # instance).
 only_vpn_access: true
