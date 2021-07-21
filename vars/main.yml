@@ -204,7 +204,8 @@ easyrsa_ca_pass: "secret"
 #
 # Openvpn configuration
 #
-
+# IP of OpenVPN Server, configure before play the role for generate good config file
+openvpn_remote: 
 # VPN network
 openvpn_network: "10.42.42.0"
 # VPN netmask
