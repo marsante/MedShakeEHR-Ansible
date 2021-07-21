@@ -33,71 +33,81 @@
     mode: "u=rwX,go=rX"
     owner: www-data
     group: www-data
-  when: not msehr.stat.exists 
-  
+  when: not msehr.stat.exists
+
 - name: Composer upgrade on /ehr
-  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache
   become: yes
   become_user: www-data
 
 - name: Composer upgrade on /ehr/public_html
-  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache
   become: yes
   become_user: www-data
 
 - name: Execute MedShakeEHR cli installation script
-  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
+  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D \"{{ effective_domain }}\""
   become: yes
   become_user: www-data
   environment:
     MEDSHAKEEHRPATH: "{{ msehrPath }}"
   when: not msehr.stat.exists
 
-- name: Creates SSL directory
-  file:
-    path: "/etc/ssl/{{ domain }}"
-    state: directory
-    recurse: yes
-    owner: root
-    group: root
-    mode: '0755'
-    state: directory
-  when: create_self_signed_cert and  not msehr.stat.exists
+#
+# No longer required
+# The certificate is no created by ansible-easy-rsa role
+#
 
-- name: create private key
-  openssl_privatekey:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    size: 4096
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Ensure we have python3 lib for openssl
+  #apt:
+    #package: python3-openssl
+    #state: present
 
-- name: Generate an OpenSSL Certificate Signing Request with Subject information
-  openssl_csr:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    country_name: "{{ countryName }}"
-    locality_name: "{{ localityName }}"
-    organization_name: "{{ organizationName }}"
-    email_address: "{{ emailAdress }}"
-    common_name: "{{ domain }}"
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Creates SSL directory
+  #file:
+    #path: "/etc/ssl/{{ domain }}"
+    #state: directory
+    #recurse: yes
+    #owner: root
+    #group: root
+    #mode: '0755'
+    #state: directory
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
-- name: Generate a Self Signed OpenSSL certificate
-  openssl_certificate:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    provider: selfsigned
-    valid_in: "315360000"
-    state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: create private key
+  #openssl_privatekey:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #size: 4096
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
-- name: Clean the Certificate Signing Request
-  file:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    state: absent
-  when: create_self_signed_cert and  not msehr.stat.exists
+#- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  #openssl_csr:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #country_name: "{{ countryName }}"
+    #locality_name: "{{ localityName }}"
+    #organization_name: "{{ organizationName }}"
+    #email_address: "{{ emailAdress }}"
+    #common_name: "{{ domain }}"
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
+
+#- name: Generate a Self Signed OpenSSL certificate
+  #openssl_certificate:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
+    #privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    #csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #provider: selfsigned
+    #valid_in: "315360000"
+    #state: present
+  #when: create_self_signed_cert and  not msehr.stat.exists
+
+#- name: Clean the Certificate Signing Request
+  #file:
+    #path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    #state: absent
+  #when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Setup orthanc configuration.
   template:
@@ -105,7 +115,7 @@
     dest: "/etc/orthanc/orthanc.json"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: "'orthanc' in ansible_facts.packages"
 
 - name: Creating MEDSHAKEEHRPATH file
@@ -114,3 +124,38 @@
     content: |
       {{ msehrPath }}
   when: not msehr.stat.exists
+
+- name: Ensure install script is absent
+  file:
+    path: "{{ msehrPath }}/public_html/install.php"
+    state: absent
+
+- name: Config apache for MedShakeEHR
+  block:
+  - name: Log dir for MedShake (www-data must can read this file or directory)
+    file:
+      path: /var/log/medshake/
+      mode: "0770"
+      owner: www-data
+      group: www-data
+      state: directory
+  - name: Log dir for MedShake (www-data must can read this file or directory)
+    copy:
+      src: logrotate-medshake
+      dest: /etc/logrotate.d/medshake
+      mode: "0644"
+      owner: root
+      group: root
+  - name: Create apache config for MedShakeEHR
+    template:
+      src: apache-medshake.conf.j2
+      dest: /etc/apache2/sites-available/medshake.conf
+      owner: root
+      group: root
+      mode: "0644"
+    notify: restart apache
+  - name: Ensure conf apache for MedShakeEHR is enabled
+    command: /usr/sbin/a2ensite medshake.conf
+    args:
+      creates: /etc/apache2/sites-enabled/medshake.conf
+

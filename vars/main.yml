@@ -7,7 +7,7 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
+msehr_package: ['acl','curl','dcmtk','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
@@ -55,8 +55,7 @@ firewall_allowed_tcp_ports:
   - "22"
   - "80"
   - "443"
-
-
+  
 # jnv.unattended-upgrades Vars
 unattended_remove_unused_dependencies: true
 
@@ -68,29 +67,32 @@ apache_listen_ip: "*"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
-apache_create_vhosts: true
-apache_vhosts_filename: "vhosts.conf"
-apache_vhosts_template: "vhosts.conf.j2"
+apache_create_vhosts: false
+#apache_vhosts_filename: "vhosts.conf"
+#apache_vhosts_template: "vhosts.conf.j2"
 
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: true
 
-apache_vhosts:
-  # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  - servername: "msehr.local"
-    documentroot: "/home/ehr/public_html/"
+#
+# Apache config for MedShakeEHR is now managed by MedShakeEHR role
+# (need custom template to restrict acces for VPN only)
+#apache_vhosts:
+  ## Additional properties:
+  ## 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  #- servername: "msehr.local"
+    #documentroot: "/home/ehr/public_html/"
 
-apache_vhosts_ssl:
+#apache_vhosts_ssl:
 #  Additional properties:
 #  'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  - servername: "msehr.local"
-    documentroot: "/home/ehr/public_html/"
-    certificate_file: "/etc/ssl/msehr.local/msehr.local.pem"
-    certificate_key_file: "/etc/ssl/msehr.local/msehr.local.key"
-#   # Optional.
-#   certificate_chain_file: "/path/to/certificate_chain.crt"
+  #- servername: "msehr.local"
+    #documentroot: "/home/ehr/public_html/"
+    #certificate_file: "/etc/easyrsa/ca_medshake/pki/issued/apache.crt"
+    #certificate_key_file: "/etc/easyrsa/ca_medshake/pki/private/apache.key"
+##   # Optional.
+##   certificate_chain_file: "/path/to/certificate_chain.crt"
 
 apache_ignore_missing_ssl_certificate: true
 
@@ -99,6 +101,7 @@ apache_mods_enabled:
   - rewrite.load
   - headers.load
   - ssl.load
+  - usertrack.load
 apache_mods_disabled: []
 
 
@@ -136,7 +139,7 @@ php_enable_apc: false
 # Any and all changes to /etc/php.ini will be your responsibility.
 php_use_managed_ini: true
 
-php_max_input_vars: "10000"
+php_max_input_vars: "20000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "Europe/Paris"
@@ -184,3 +187,53 @@ mysql_users:
     # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
     password: secret
     priv: "medshakeehr.*:ALL"
+
+#
+# EasyRsa Configuration
+#
+
+# This enable the service to send warn mail when a certificate will expire.
+# If you enable this you will ensure your system is able to send email with
+# send mail (with a tool like msmtp-mta).
+easyrsa_alert_renew_service: false
+# Name of the CA for MedShake
+# Pass for CA private key
+# /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+easyrsa_ca_pass: "secret"
+
+#
+# Openvpn configuration
+#
+# IP of OpenVPN Server, configure before play the role for generate good config file
+openvpn_remote: 
+# VPN network
+openvpn_network: "10.42.42.0"
+# VPN netmask
+openvpn_netmask: "255.255.255.0"
+# List of VPN client
+# For each client :
+# - set a name (only alpha numeric characters with no space)
+# - set a pass (for the private key of the certificate)
+# - set a ip (for ip of client in the vpn, must be in vpn network)
+# - if the client certificate is revoked add 'revoked: true'
+clients_medshake:
+  - name: drstrange
+    pass: 'secret'
+    ip: '10.42.42.10'
+#   renew: false            # disable client certificate renew when re-play the playbook (occurs only when certificate is expired)
+#   revoked: true           # revoke the EasyRSA certificate for the client (avoid it to connect to the VPN)
+  - name: drjekyll
+    pass: 'secret'
+    ip: '10.42.42.11'
+# This is the iface where the vpn server is listening
+# (used to get his ip quickly when test with Vagrant, for production usage use
+# openvpn_remote)
+exposed_iface: eth0
+# Set "remote" for config generated for OpenVPN clients
+#openvpn_remote: xxx.xxx.xxx.xxx
+
+# If is true, MedShakeEHR will only accessible by the VPN network
+# Is greatly recommended to keep this at 'true' if the MedShake instance
+# is accessible by several client (not only by the post which host the
+# instance).
+only_vpn_access: true

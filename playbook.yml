@@ -1,10 +1,77 @@
 ---
 - name: Installation
   hosts: all
+  become: yes
   vars_files:
     - vars/main.yml
 
+  pre_tasks:
+    - name: Config Wrapper (help to auto configure some roles variables)
+      block:
+      - name: Configure EasyRSA
+        block:
+        - name: Configure EasyRSA add elements server
+          set_fact:
+            ca_medshake_elements:
+            - name: openvpn
+              type: server
+              cn: "OpenvpnEHR"
+            - name: apache
+              type: server
+              cn: "ApacheEHR"
+        - name: Configure EasyRSA add element clients
+          set_fact:
+            ca_medshake_elements: "{{ ca_medshake_elements }} + [ { 'name': '{{ item.name }}', 'type': 'client', 'pass': '{{ item.pass }}', 'revoked': {{ item.revoked|default(false) }}, 'renew': {{ item.renew|default(true) }} } ]"
+          with_items: "{{ clients_medshake }}"
+        - name: Configure EasyRSA configure CA
+          set_fact:
+            easyrsa_ca_list:
+            - name: ca_medshake
+              pass: "{{ easyrsa_ca_pass }}"
+              gen_dh: false
+              conf:
+                req_country: "{{ countryName }}"
+                req_ou: "{{ organizationName }}"
+                req_email: "{{ emailAdress }}"
+                algo: ec
+              elements: "{{ ca_medshake_elements }}"
+      - name: Configure Openvpn
+        block:
+        - name: Configure Openvpn clients (init var)
+          set_fact:
+            openvpn_clients_list: []
+        - name: Configure Openvpn clients
+          set_fact:
+            openvpn_clients_list: "{{ openvpn_clients_list }} + [ { 'name': '{{ item.name }}', 'cc': ['ifconfig-push {{ item.ip }} {{ openvpn_netmask }}'] } ]"
+          with_items: "{{ clients_medshake }}"
+        - name: Configure Openvpn server
+          set_fact:
+            openvpn_server:
+            - name: "medshake"
+              enabled: true
+              remote: "{{ openvpn_remote|default(ansible_facts[exposed_iface].ipv4.address) }}"
+              cn: "OpenvpnEHR"
+              cli_privkey_dir: "/etc/easyrsa/ca_medshake/pki/private/"
+              cli_cert_dir: "/etc/easyrsa/ca_medshake/pki/issued/"
+              port: "{{ openvpn_port|default(1194) }}"
+              conf:
+                network: "{{ openvpn_network }}"
+                netmask: "{{ openvpn_netmask }}"
+                ca: "/etc/easyrsa/ca_medshake/pki/ca.crt"
+                cert: "/etc/easyrsa/ca_medshake/pki/issued/openvpn.crt"
+                key: "/etc/easyrsa/ca_medshake/pki/private/openvpn.key"
+                crl_file: "/etc/easyrsa/ca_medshake/pki/crl.pem"
+              clients: "{{ openvpn_clients_list }}"
+        - name: Set effective domain
+          set_fact:
+            effective_domain: "{{ openvpn_network|regex_replace('([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})\\.[0-9]{1,3}', '\\1.1') if only_vpn_access else domain }}"
+        - name: Add openvpn port to firewall_allowed_udp_ports
+          set_fact:
+            firewall_allowed_udp_ports: "{{ firewall_allowed_udp_ports|default([]) }} + [ {{ openvpn_port|default(1194) }} ]"
+
   roles:
+    - { role: ansible-role-easyrsa, tags: ['EasyRSA', 'security', 'base'] }
+    - { role: ansible-role-openvpn, tags: ['OpenVPN', 'security', 'base'] }
     - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
@@ -13,10 +80,9 @@
     - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
     - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
     - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
-    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
-    #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
+    - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
 
   post_tasks:
     - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
