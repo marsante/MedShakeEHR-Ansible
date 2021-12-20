@@ -18,6 +18,4 @@
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
     #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
 
-  post_tasks:
-    - shell: usermod -p "*" {{ user }} # Unlock account after ssh-hardening
 ...
