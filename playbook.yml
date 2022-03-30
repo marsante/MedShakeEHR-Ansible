@@ -5,14 +5,13 @@
     - vars/main.yml
 
   roles:
-    - { role: dev-sec.os-hardening, tags: ['OS-sec', 'security', 'base'] }
-    - { role: dev-sec.ssh-hardening, tags: ['SSH-sec', 'security', 'base'] }
+    - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
+    - { role: devsec.hardening.ssh_hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
     - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
     - { role: geerlingguy.mysql, tags: ['MariaDB', 'base', 'minimal'] }
-    - { role: dev-sec.mysql-hardening, tags: ['MariaDB-sec', 'security', 'base'] }
+    - { role: devsec.hardening.mysql_hardening, tags: ['MariaDB-sec', 'security', 'base'] }
     - { role: geerlingguy.php, tags: ['PHP', 'base', 'minimal'] }
-    - { role: geerlingguy.composer, tags: ['composer', 'base', 'minimal'] } # remove after Debian 10 EOL & add composer to msehrpackage
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }

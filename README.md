@@ -22,7 +22,7 @@ Ce que le playbook fait :
 
 ## Prérequis
 - Ansible > 2.5
--  Ansible > 2.9 pour le rôle SSH-sec
+-  Ansible > 2.9.10 pour la collection `devsec.hardening`
 - Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
 
 ## Installation 
@@ -39,7 +39,7 @@ ansible-galaxy install -r requirements.yml
 - Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>` ou via un fichier `host.yml` : `ansible-playbook -i hosts.yml  --user=<user> playbook.yml`
 
 ## Variables
-Les variables des rôles `dev-sec.os-hardening`, `dev-sec.ssh-hardening`, `geerlingguy.firewall`, `jnv.unattended-upgrades`, `geerlingguy.apache`, `geerlingguy.php`, `geerlingguy.mysql`, `dev-sec.mysql-hardening`, sont décrites dans les `README` des projets sur Github.
+Les variables des collections et rôles `devsec.hardening`, `geerlingguy.firewall`, `jnv.unattended-upgrades`, `geerlingguy.apache`, `geerlingguy.php`, `geerlingguy.mysql`, sont décrites dans les `README` des projets sur Github.
 
 | Nom                     | Valeurs par défaut                                                       | Description                                                                                |
 | ----                    | ------------------                                                       | ------------                                                                               |

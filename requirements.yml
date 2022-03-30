@@ -1,13 +1,13 @@
 ---
 roles: 
-  - dev-sec.os-hardening
-  - dev-sec.ssh-hardening
-  - geerlingguy.firewall
-  - jnv.unattended-upgrades
-  - geerlingguy.apache
-  - geerlingguy.php
-  - geerlingguy.mysql
-  - dev-sec.mysql-hardening
-  - geerlingguy.composer #remove after debian 10 EOL
+  - name: geerlingguy.firewall
+  - name: jnv.unattended-upgrades
+  - name: geerlingguy.apache
+  - name: geerlingguy.php
+  - name: geerlingguy.mysql
+    src: git+https://github.com/geerlingguy/ansible-role-mysql.git
+
+collections:
+  - name: devsec.hardening
 
 
