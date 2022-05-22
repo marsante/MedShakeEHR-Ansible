@@ -79,6 +79,7 @@
     organization_name: "{{ organizationName }}"
     email_address: "{{ emailAdress }}"
     common_name: "{{ domain }}"
+    subject_alt_name: 'DNS:"{{ domain }}"'
     state: present
   when: create_self_signed_cert and  not msehr.stat.exists
 
