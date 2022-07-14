@@ -184,3 +184,9 @@ mysql_users:
     # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
     password: secret
     priv: "medshakeehr.*:ALL"
+
+# VPN
+# https://github.com/githubixx/ansible-role-wireguard
+
+wireguard_service_enabled: "yes"
+wireguard_service_state: "started"

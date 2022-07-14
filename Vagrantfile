@@ -2,7 +2,8 @@ Vagrant.configure("2") do |config|
     config.vm.box = "debian/bullseye64"
     config.vm.define 'medshakeansible'
     config.vm.hostname = "msehr.local"
-    config.vm.network "private_network", ip: "192.168.56.4"
+    #config.vm.network "private_network", ip: "192.168.56.4"
+    config.vm.network "public_network", ip: "192.168.1.54"
     config.vm.synced_folder ".", "/vagrant", type: "rsync"
 
     config.vm.provision "ansible" do |ansible|

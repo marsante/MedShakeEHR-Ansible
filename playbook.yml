@@ -15,6 +15,6 @@
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
-    #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
+    - { role: githubixx.ansible_role_wireguard, tags: ['VPN', 'security', 'VPN']}
 
 ...
