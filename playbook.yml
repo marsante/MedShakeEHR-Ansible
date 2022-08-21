@@ -1,6 +1,8 @@
 ---
-- name: Installation
-  hosts: all
+- name: Installation medshakehr
+  hosts: 192.168.1.17
+  become: true
+  become_user: root
   vars_files:
     - vars/main.yml
 
@@ -15,6 +17,15 @@
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
+
+- name: Installation vpn client
+  hosts: all
+  become: true
+  become_user: root
+  vars_files:
+    - vars/main.yml
+
+  roles:
     - { role: githubixx.ansible_role_wireguard, tags: ['VPN', 'security', 'VPN']}
 
 ...

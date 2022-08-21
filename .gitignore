@@ -13,3 +13,4 @@
 *.code-workspace
 .history
 Dockerfile
+hosts_dev.yml

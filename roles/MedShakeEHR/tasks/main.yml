@@ -37,17 +37,17 @@
   
 - name: Composer upgrade on /ehr
   shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
-  become: yes
+  become: true
   become_user: www-data
 
 - name: Composer upgrade on /ehr/public_html
   shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
-  become: yes
+  become: true
   become_user: www-data
 
 - name: Execute MedShakeEHR cli installation script
   shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
-  become: yes
+  become: true
   become_user: www-data
   environment:
     MEDSHAKEEHRPATH: "{{ msehrPath }}"
