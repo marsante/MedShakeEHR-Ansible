@@ -37,22 +37,20 @@ Vagrant.configure("2") do |config|
           v.memory = machine[:ram]
           v.cpus = machine[:cpu]
         end
-        if machine_id == N
-          config.vm.provision "ansible" do |ansible|
-            ansible.limit = "all"
-            ansible.playbook = "playbook.yml"
-            ansible.become = true
-            ansible.host_vars = {
-              "medshakeehr" => {"wireguard_address" => "10.9.0.1/32",
-                                "wireguard_allowed_ips" => "10.9.0.2/32",
-                                "wireguard_endpoint" => "medshakeehr"},
-              "client" => {"wireguard_address" => "10.9.0.2/32",
-                          "wireguard_allowed_ips" => "10.9.0.1/32",
-                          "wireguard_endpoint" => "medshakeehr"}
-            }
-            verbose = "-vvv"
-          end
-        end
+      end
+    end
+    if machine_id == N
+      config.vm.provision "ansible" do |ansible|
+        ansible.limit = "all"
+        ansible.playbook = "playbook.yml"
+        ansible.become = true
+        ansible.host_vars = {
+          "medshakeehr" => {"wireguard_address" => "10.9.0.1/32",
+                            "wireguard_endpoint" => "medshakeehr"},
+          "client" => {"wireguard_address" => "10.9.0.2/32",
+                        "wireguard_endpoint" => ""}
+        }
+        verbose = "-vvv"
       end
     end
   end
