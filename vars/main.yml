@@ -55,6 +55,7 @@ firewall_allowed_tcp_ports:
   - "22"
   - "80"
   - "443"
+firewall_allowed_udp_ports:
   - "51820"
 
 
@@ -66,6 +67,8 @@ unattended_remove_unused_dependencies: true
 apache_enablerepo: ""
 
 apache_listen_ip: "*"
+# for VPN
+# apache_listen_ip: "10.9.1.0"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
