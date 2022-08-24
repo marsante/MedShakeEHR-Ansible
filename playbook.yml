@@ -2,8 +2,6 @@
 - name: Installation medshakehr
   hosts: medshakeehr
   become: true
-  vars_files:
-    - vars/main.yml
 
   roles:
     - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
@@ -20,8 +18,6 @@
 - name: Installation vpn client
   hosts: all
   become: true
-  vars_files:
-    - vars/main.yml
 
   roles:
     - { role: githubixx.ansible_role_wireguard, tags: ['VPN', 'security']}

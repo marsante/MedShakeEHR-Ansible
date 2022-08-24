@@ -26,9 +26,6 @@ Vagrant.configure("2") do |config|
         # libvirt can't attach wireless interface to a bridge 
         #https://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29
         node.vm.network  "public_network", bridge: "wlp0s20f3"
-        node.hostmanager.enabled = true
-        node.hostmanager.manage_host = true
-        node.hostmanager.manage_guest = true
         node.vm.provider "libvirt" do |lb|
           lb.memory = machine[:ram]
           lb.cpus = machine[:cpu]
@@ -37,19 +34,14 @@ Vagrant.configure("2") do |config|
           v.memory = machine[:ram]
           v.cpus = machine[:cpu]
         end
-      end
+      end 
     end
     if machine_id == N
       config.vm.provision "ansible" do |ansible|
         ansible.limit = "all"
         ansible.playbook = "playbook.yml"
+        inventory_path = "hosts.yml"
         ansible.become = true
-        ansible.host_vars = {
-          "medshakeehr" => {"wireguard_address" => "10.9.0.1/32",
-                            "wireguard_endpoint" => "medshakeehr"},
-          "client" => {"wireguard_address" => "10.9.0.2/32",
-                        "wireguard_endpoint" => ""}
-        }
         verbose = "-vvv"
       end
     end

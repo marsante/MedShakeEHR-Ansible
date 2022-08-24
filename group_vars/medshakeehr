@@ -68,9 +68,9 @@ unattended_remove_unused_dependencies: true
 # geerlingguy.apache Vars
 apache_enablerepo: ""
 
-apache_listen_ip: "*"
+# apache_listen_ip: "*"
 # for VPN
-# apache_listen_ip: "10.9.1.0"
+apache_listen_ip: "10.9.1.0"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
@@ -196,3 +196,5 @@ mysql_users:
 
 wireguard_service_enabled: "yes"
 wireguard_service_state: "started"
+wireguard_address: 10.9.0.1/32
+wireguard_endpoint: 192.168.1.17  
