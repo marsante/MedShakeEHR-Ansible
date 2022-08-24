@@ -6,7 +6,6 @@ roles:
   - name: geerlingguy.php
   - name: githubixx.ansible_role_wireguard
   - name: geerlingguy.mysql
-    src: git+https://github.com/geerlingguy/ansible-role-mysql.git
 
 collections:
   - name: devsec.hardening
