@@ -40,9 +40,15 @@ Vagrant.configure("2") do |config|
       config.vm.provision "ansible" do |ansible|
         ansible.limit = "all"
         ansible.playbook = "playbook.yml"
-        inventory_path = "hosts.yml"
         ansible.become = true
         verbose = "-vvv"
+        ansible.host_vars = {
+          "medshakeehr" => {"wireguard_address" => "10.9.0.1/32",
+                            "wireguard_endpoint" => "medshakeehr"},
+          "client" => {"wireguard_address" => "10.9.0.2/32",
+                        "wireguard_endpoint" => ""}
+        }
+        
       end
     end
   end
