@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-    config.vm.box = "debian/bullseye64"
+    config.vm.box = "generic/debian11"
     config.vm.define 'medshakeansible'
     config.vm.hostname = "msehr.local"
     config.vm.network "private_network", ip: "192.168.56.4"
@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "playbook.yml"
       ansible.become = true
-      ansible.become_user = "root"
+      ansible.compatibility_mode = '2.0'
     end
 
     # # Custom VM config
