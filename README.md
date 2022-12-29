@@ -13,8 +13,8 @@ Ce que le playbook fait :
 - Sécurisation de MariaDB
 - Sécurisation de PHP
 - Sécurisation de l'OS
-- Installation d'OpenVPN
-- Sécurisation d'OpenVPN
+- Installation d'Wireguard (VPN)
+- Sécurisation d'Wireguard (VPN)
 - Installation d'Orthanc en réseau local
 
 À faire :
