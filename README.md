@@ -13,16 +13,16 @@ Ce que le playbook fait :
 - Sécurisation de MariaDB
 - Sécurisation de PHP
 - Sécurisation de l'OS
-
-À faire :
 - Installation d'OpenVPN
 - Sécurisation d'OpenVPN
 - Installation d'Orthanc en réseau local
+
+À faire :
 - ?
 
 ## Prérequis
 - Ansible > 2.5
--  Ansible > 2.9.10 pour la collection `devsec.hardening`
+- Ansible > 2.9.10 pour la collection `devsec.hardening`
 - Avoir configuré correctement l'authentification SSH entre l'ordinateur client et l'ordinateur serveur.
 
 ## Installation 
@@ -33,9 +33,7 @@ cd MedShakeEHR-Ansible
 ansible-galaxy install -r requirements.yml 
 ```
 - Configurer les variables dans le dossier `variables/main.yml`
-
 - Si vous souhaitez versionner publiquement le projet, créez un fichier `secret.yml`, déplacez toutes les variables sensibles dedans et ajoutez le fichier à `playbook.yml`
-
 - Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>` ou via un fichier `host.yml` : `ansible-playbook -i hosts.yml  --user=<user> playbook.yml`
 
 ## Variables
