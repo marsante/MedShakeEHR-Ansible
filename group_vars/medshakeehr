@@ -195,4 +195,10 @@ mysql_users:
 # https://github.com/githubixx/ansible-role-wireguard
 
 wireguard_address: 10.9.0.1/32
-wireguard_endpoint: 192.168.1.17  
+wireguard_endpoint: 192.168.1.17
+wireguard_preup:
+  - echo 1 > /proc/sys/net/ipv4/ip_forward
+wireguard_postup:
+  - iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+  - iptables -A FORWARD -i %i -j ACCEPT
+  - iptables -A FORWARD -o %i -j ACCEPT
