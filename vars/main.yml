@@ -7,13 +7,13 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
+msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
-msehr_base_release: "7.3.1"
+msehr_base_release: "7.3.2"
 # sha256 check sum for the getted file (integrity check for the downloaded file)
-msehr_base_checksum: "sha256:6f7a04f81c00965f8abb7a3d4d3f48a89dab1d50a77bee03b57f073eff072e4e"
+msehr_base_checksum: "sha256:3b49d7fa55f465305e58b31490b36dc1a5f58d7bed955f12c90c7bd2c384f6e2"
 
 # generate the self signed certificate for medshake web access
 create_self_signed_cert: true
@@ -96,9 +96,9 @@ apache_ignore_missing_ssl_certificate: true
 
 # Only used on Debian/Ubuntu.
 apache_mods_enabled:
-  - headers
-  - rewrite
-  - ssl
+  - rewrite.load
+  - headers.load
+  - ssl.load
 apache_mods_disabled: []
 
 
@@ -107,7 +107,7 @@ apache_mods_disabled: []
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
+php_packages: ['php', 'php-gd', 'php-intl', 'php-curl', 'php-zip', 'php-xml', 'php-imagick', 'php-imap', 'php-soap', 'php-mysql', 'php-json', 'php-yaml', 'php-gnupg']
 
 # Default PHP version to install on Debian-based OSes (OS-specific).
 # php_default_version_debian: ""
