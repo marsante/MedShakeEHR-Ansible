@@ -7,7 +7,7 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','wget']
+msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
@@ -102,9 +102,9 @@ apache_ignore_missing_ssl_certificate: true
 
 # Only used on Debian/Ubuntu.
 apache_mods_enabled:
-  - rewrite.load
-  - headers.load
-  - ssl.load
+  - rewrite
+  - headers
+  - ssl
 apache_mods_disabled: []
 
 
@@ -113,8 +113,7 @@ apache_mods_disabled: []
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php', 'php-gd', 'php-intl', 'php-curl', 'php-zip', 'php-xml', 'php-imagick', 'php-imap', 'php-soap', 'php-mysql', 'php-json', 'php-yaml', 'php-gnupg']
-
+php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
 # Default PHP version to install on Debian-based OSes (OS-specific).
 # php_default_version_debian: ""
 
