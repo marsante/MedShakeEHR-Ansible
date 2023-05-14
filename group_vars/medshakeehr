@@ -31,6 +31,8 @@ os_auth_pw_max_age: 9999
 # Do not delete the following line or otherwise the playbook will fail
 # at task 'create a combined sysctl-dict if overwrites are defined'
 sysctl_overwrite:
+  # uncomment for VPN
+  # net.ipv4.ip_forward: 1
 
 # dev-sec.ssh-hardening Vars
 ssh_host_key_files: ['/etc/ssh/ssh_host_ed25519_key']
@@ -55,6 +57,8 @@ firewall_allowed_tcp_ports:
   - "22"
   - "80"
   - "443"
+firewall_allowed_udp_ports:
+  - "51820"
 
 
 # jnv.unattended-upgrades Vars
@@ -64,7 +68,9 @@ unattended_remove_unused_dependencies: true
 # geerlingguy.apache Vars
 apache_enablerepo: ""
 
-apache_listen_ip: "*"
+# apache_listen_ip: "*"
+# for VPN
+apache_listen_ip: "10.9.1.0"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
@@ -184,3 +190,15 @@ mysql_users:
     # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
     password: secret
     priv: "medshakeehr.*:ALL"
+
+# VPN
+# https://github.com/githubixx/ansible-role-wireguard
+
+wireguard_address: 10.9.0.1/32
+wireguard_endpoint: 192.168.1.17
+wireguard_preup:
+  - echo 1 > /proc/sys/net/ipv4/ip_forward
+wireguard_postup:
+  - iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+  - iptables -A FORWARD -i %i -j ACCEPT
+  - iptables -A FORWARD -o %i -j ACCEPT

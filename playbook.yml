@@ -1,8 +1,7 @@
 ---
-- name: Installation
-  hosts: all
-  vars_files:
-    - vars/main.yml
+- name: Installation medshakehr
+  hosts: medshakeehr
+  become: true
 
   roles:
     - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
@@ -15,6 +14,11 @@
     - { role: MedShakeEHR, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
     - { role: Apache-sec, tags: ['Apache', 'security', 'base'] }
-    #- { role: OpenVPN, tags: ['OpenVPN', 'security', 'VPN']}
 
+- name: Installation vpn client
+  hosts: all
+  become: true
+
+  roles:
+    - { role: githubixx.ansible_role_wireguard, tags: ['VPN', 'security']}
 ...
