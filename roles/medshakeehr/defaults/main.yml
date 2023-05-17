@@ -1,0 +1,73 @@
+---
+timezone: "Europe/Paris"
+domain: msehr.local
+msehrPath: "/home/ehr"
+msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
+msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
+msehr_base_release: "7.3.2"
+msehr_base_checksum: "sha256:3b49d7fa55f465305e58b31490b36dc1a5f58d7bed955f12c90c7bd2c384f6e2"
+create_self_signed_cert: true
+countryName: FR
+localityName: Paris
+organizationName: Dr Strange
+emailAdress: email@domain.tld
+orthancUser: user
+orthancPswd: orthancPswd
+php_enablerepo: ""
+php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
+php_packages_state: present
+php_install_recommends: true
+php_enable_webserver: true
+php_enable_php_fpm: false
+php_opcache_zend_extension: "opcache.so"
+php_opcache_enable: "0"
+php_enable_apc: false
+php_use_managed_ini: true
+php_max_input_vars: "10000"
+php_upload_max_filesize: "64M"
+php_post_max_size: "32M"
+php_date_timezone: "Europe/Paris"
+mysql_user_home: /home/vagrant
+mysql_user_name: vagrant
+# /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+mysql_user_password: root
+mysql_root_home: /root
+mysql_root_username: root
+mysql_root_password: root
+mysql_root_password_update: false
+mysql_user_password_update: false
+mysql_enabled_on_startup: true
+overwrite_global_mycnf: true
+mysql_enablerepo: ""
+mysql_python_package_debian: python3-mysqldb
+mysql_databases:
+  - name: medshakeehr
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+mysql_users:
+  - name: medshakeehr
+    host: localhost
+    # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+    password: secret
+    priv: "medshakeehr.*:ALL"
+apache_listen_ip: "*"
+apache_listen_port: 80
+apache_listen_port_ssl: 443
+apache_create_vhosts: true
+apache_vhosts_filename: "vhosts.conf"
+apache_vhosts_template: "vhosts.conf.j2"
+apache_remove_default_vhost: true
+apache_vhosts:
+  - servername: "msehr.local"
+    documentroot: "/home/ehr/public_html/"
+apache_vhosts_ssl:
+  - servername: "msehr.local"
+    documentroot: "/home/ehr/public_html/"
+    certificate_file: "/etc/ssl/msehr.local/msehr.local.pem"
+    certificate_key_file: "/etc/ssl/msehr.local/msehr.local.key"
+apache_ignore_missing_ssl_certificate: true
+apache_mods_enabled:
+  - rewrite
+  - headers
+  - ssl

@@ -1,7 +1,6 @@
 ---
 galaxy_info:
-    author: "Michaël Val"
-    contributors: "Indelog"
+    author: "Michaël Val contrib Indelog"
     description: 'This Ansible role install the latest version of MedShakeEHR'
     license: GPL-3.0-only
     min_ansible_version: '2.9'
@@ -10,4 +9,7 @@ galaxy_info:
       versions:
         - stretch
         - buster
-dependencies: []
+        - bullseye
+dependencies: 
+  - role: geerlingguy.php
+  - role: geerlingguy.mysql

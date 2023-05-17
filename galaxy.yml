@@ -1,0 +1,41 @@
+namespace: marsante
+
+name: medshakeehr
+
+version: 1.0.0
+
+readme: README.md
+
+authors:
+- Michaël Val contact@brunoy-osteopathe.fr
+- Indelog
+
+description: a collection to install and secure MedShakeEHR
+
+license:
+- GPL-3.0-only
+
+license_file: LICENSE
+
+tags: [health,care,medshakeehr,ehr]
+
+# Collections that this collection requires to be installed for it to be usable. The key of the dict is the
+# collection label 'namespace.name'. The value is a version range
+# L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
+# range specifiers can be set and are separated by ','
+dependencies: { geerlingguy.apache,
+  geerlingguy.firewall,
+  jnv.unattended-upgrades,
+  githubixx.ansible_role_wireguard,
+  devsec.hardening
+}
+
+repository: http://example.com/repository
+
+documentation: http://docs.example.com
+
+homepage: http://example.com
+
+issues: http://example.com/issue/tracker
+
+build_ignore: []

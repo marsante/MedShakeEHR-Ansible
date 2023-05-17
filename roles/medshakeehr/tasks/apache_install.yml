@@ -1,0 +1,14 @@
+---
+# - name: Install geerlingguy.apache role 
+#   community.general.ansible_galaxy_install:
+#     type: role
+#     name: geerlingguy.apache
+
+# - name: Install geerlingguy.apache
+#   ansible.builtin.shell: ansible-galaxy install geerlingguy.apache
+
+- name: Install Apache
+  include_role:
+    name: geerlingguy.apache
+
+    

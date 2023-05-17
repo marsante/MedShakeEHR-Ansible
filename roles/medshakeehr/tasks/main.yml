@@ -1,0 +1,73 @@
+---
+- name: gather package facts
+  ansible.builtin.package_facts:
+
+- name: Set timezone to Europe/Paris
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Install packages
+  apt: name={{ msehr_package }} update_cache=yes state=latest
+
+- name:  check if MedShakeEHR installation is complete
+  stat:
+    path: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+  register: msehr
+
+- name: Get MedShakeEHR package
+  get_url:
+    url: "{{ msehr_base_repo_url }}v{{ msehr_base_release }}"
+    dest: "/tmp/msehr.tar.gz"
+    checksum: "{{ msehr_base_checksum }}"
+  when: not msehr.stat.exists
+
+- name: Extract MedShakeEHR package
+  unarchive:
+    src: "/tmp/msehr.tar.gz"
+    remote_src: yes
+    dest: "/tmp/"
+  when: not msehr.stat.exists
+
+- name: Install MedShakeEHR file
+  copy:
+    remote_src: yes
+    src: "/tmp/MedShakeEHR-base-{{ msehr_base_release }}/"
+    dest: "{{ msehrPath }}"
+    mode: "u=rwX,go=rX"
+    owner: www-data
+    group: www-data
+  when: not msehr.stat.exists
+
+- name: Composer upgrade on /ehr
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  become: true
+  become_user: www-data
+
+- name: Composer upgrade on /ehr/public_html
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  become: true
+  become_user: www-data
+
+- name: Execute MedShakeEHR cli installation script
+  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ mysql_databases[0]['name'] }} -u {{ mysql_users[0]['name'] }} -p \"{{ mysql_users[0]['password'] }}\" -r https -D {{ domain }}"
+  become: true
+  become_user: www-data
+  environment:
+    MEDSHAKEEHRPATH: "{{ msehrPath }}"
+  when: not msehr.stat.exists
+
+- name: Creating MEDSHAKEEHRPATH file
+  copy:
+    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    content: |
+      {{ msehrPath }}
+  when: not msehr.stat.exists
+
+- name: "Install orthanc"
+  ansible.builtin.include_tasks: orthanc_install.yml
+
+- name: "Install self-signed certificate"
+  ansible.builtin.include_tasks: cert_install.yml
+
+- name: "Install apache"
+  ansible.builtin.include_tasks: apache_install.yml
