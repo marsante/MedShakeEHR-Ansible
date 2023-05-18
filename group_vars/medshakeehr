@@ -68,9 +68,7 @@ unattended_remove_unused_dependencies: true
 # geerlingguy.apache Vars
 apache_enablerepo: ""
 
-# apache_listen_ip: "*"
-# for VPN
-apache_listen_ip: "10.9.1.0"
+apache_listen_ip: "*"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
