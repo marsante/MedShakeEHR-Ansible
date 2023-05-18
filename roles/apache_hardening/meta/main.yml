@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Michaël Val
+  description: hardening Apache
+
+  license: GPL-3.0-only
+
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+        - bullseye
+
+  galaxy_tags: []
+
+dependencies: []

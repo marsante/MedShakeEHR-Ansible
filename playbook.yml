@@ -4,8 +4,11 @@
   become: true
 
   roles:
+
     - { role: medshakeehr, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: devsec.hardening.mysql_hardening, tags: ['MariaDB-sec', 'security', 'base'] }
+    - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
+    - { role: apache_hardening, tags: ['Apache', 'security', 'base'] }
     - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: devsec.hardening.ssh_hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }

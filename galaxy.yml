@@ -2,7 +2,7 @@ namespace: marsante
 
 name: medshakeehr
 
-version: 1.0.0
+version: 2.3.0
 
 readme: README.md
 
@@ -30,12 +30,12 @@ dependencies: { geerlingguy.apache,
   devsec.hardening
 }
 
-repository: http://example.com/repository
+repository: https://github.com/marsante/MedShakeEHR-Ansible
 
-documentation: http://docs.example.com
+documentation: https://github.com/marsante/MedShakeEHR-Ansible
 
-homepage: http://example.com
+homepage: https://github.com/marsante/MedShakeEHR-Ansible
 
-issues: http://example.com/issue/tracker
+issues: https://github.com/marsante/MedShakeEHR-Ansible/issues
 
 build_ignore: []

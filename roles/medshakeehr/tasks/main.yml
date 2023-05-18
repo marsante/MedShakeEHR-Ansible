@@ -68,6 +68,3 @@
 
 - name: "Install self-signed certificate"
   ansible.builtin.include_tasks: cert_install.yml
-
-- name: "Install apache"
-  ansible.builtin.include_tasks: apache_install.yml
