@@ -11,9 +11,9 @@ msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick'
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
-msehr_base_release: "7.3.2"
+msehr_base_release: "8.0.0"
 # sha256 check sum for the getted file (integrity check for the downloaded file)
-msehr_base_checksum: "sha256:3b49d7fa55f465305e58b31490b36dc1a5f58d7bed955f12c90c7bd2c384f6e2"
+msehr_base_checksum: "sha256:1f6168627adb1cbe87053d6d48bb87a8c3bcaa9f97744d8bc28c5721c1dc5c42"
 
 # generate the self signed certificate for medshake web access
 create_self_signed_cert: true
@@ -105,6 +105,8 @@ apache_mods_enabled:
   - ssl
 apache_mods_disabled: []
 
+# geerlingguy.php_version Vars
+php_version: '8.1'
 
 # geerlingguy.php Vars
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only

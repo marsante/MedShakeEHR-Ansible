@@ -4,8 +4,8 @@ domain: msehr.local
 msehrPath: "/home/ehr"
 msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-msehr_base_release: "7.3.2"
-msehr_base_checksum: "sha256:3b49d7fa55f465305e58b31490b36dc1a5f58d7bed955f12c90c7bd2c384f6e2"
+msehr_base_release: "8.0.0"
+msehr_base_checksum: "sha256:1f6168627adb1cbe87053d6d48bb87a8c3bcaa9f97744d8bc28c5721c1dc5c42"
 create_self_signed_cert: true
 countryName: FR
 localityName: Paris
@@ -13,6 +13,7 @@ organizationName: Dr Strange
 emailAdress: email@domain.tld
 orthancUser: user
 orthancPswd: orthancPswd
+php_version: '8.1'
 php_enablerepo: ""
 php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
 php_packages_state: present
