@@ -2,7 +2,7 @@
 timezone: "Europe/Paris"
 domain: msehr.local
 msehrPath: "/home/ehr"
-msehr_package: ['acl','composer','curl','ghostscript','git','grub','imagemagick','ntp','pdftk','python3-openssl','wget']
+msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk','python3-openssl','wget']
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 msehr_base_release: "8.0.0"
 msehr_base_checksum: "sha256:1f6168627adb1cbe87053d6d48bb87a8c3bcaa9f97744d8bc28c5721c1dc5c42"
