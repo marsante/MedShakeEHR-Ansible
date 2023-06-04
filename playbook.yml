@@ -8,11 +8,20 @@
     - { role: medshakeehr, tags: ['MedShakeEHR', 'base', 'minimal'] }
     - { role: devsec.hardening.mysql_hardening, tags: ['MariaDB-sec', 'security', 'base'] }
     - { role: geerlingguy.apache, tags: ['Apache', 'base', 'minimal'] }
-    - { role: apache_hardening, tags: ['Apache', 'security', 'base'] }
     - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: devsec.hardening.ssh_hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
     - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+
+  tasks:
+    - name: Fix apache.role
+      include_role:
+        name: medshakeehr
+        tasks_from: fix_apache_role.yml
+    - name: Harden Apache2
+      include_role:
+        name: medshakeehr
+        tasks_from: hardening_apache2.yml
 
 - name: Installation vpn client
   hosts: all

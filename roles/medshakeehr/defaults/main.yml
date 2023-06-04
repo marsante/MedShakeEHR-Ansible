@@ -15,7 +15,8 @@ orthancUser: user
 orthancPswd: orthancPswd
 php_version: '8.1'
 php_enablerepo: ""
-php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
+php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
+php_default_version_debian: "{{ php_version }}"
 php_packages_state: present
 php_install_recommends: true
 php_enable_webserver: true

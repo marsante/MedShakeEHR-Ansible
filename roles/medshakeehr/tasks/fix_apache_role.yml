@@ -1,0 +1,10 @@
+---
+- name: verify apache2 dismod
+  ansible.builtin.command: a2dismod {{ item }}
+  with_items: "{{ apache_mods_disabled }}"
+  notify: restart apache
+
+- name: verify apache2 mod conf
+  ansible.builtin.command: a2enmod {{ item }}
+  with_items: "{{ apache_mods_enabled }}"
+  notify: restart apache

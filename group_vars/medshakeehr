@@ -103,7 +103,10 @@ apache_mods_enabled:
   - rewrite
   - headers
   - ssl
-apache_mods_disabled: []
+  - mpm_prefork
+  - "php{{ php_version }}"
+apache_mods_disabled:
+  - mpm_event
 
 # geerlingguy.php_version Vars
 php_version: '8.1'
@@ -113,13 +116,13 @@ php_version: '8.1'
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php','php-bcmath','php-curl','php-gd','php-gnupg','php-imagick','php-imap','php-intl','php-json','php-mbstring','php-mysql','php-soap','php-xml','php-yaml','php-zip']
+php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
 # Default PHP version to install on Debian-based OSes (OS-specific).
-# php_default_version_debian: ""
+php_default_version_debian: "{{ php_version }}"
 
 # PHP package state; use 'present' to make sure it's installed, or 'latest' if
 # you want to upgrade or switch versions using a new repo.
-php_packages_state: present
+php_packages_state: latest
 
 # Whether to install recommended packages. Used only for Debian/Ubuntu.
 php_install_recommends: true
