@@ -28,7 +28,7 @@ php_use_managed_ini: true
 php_max_input_vars: "10000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
-php_date_timezone: "Europe/Paris"
+php_date_timezone: "{{ timezone}}"
 mysql_user_home: /home/vagrant
 mysql_user_name: vagrant
 # /!\ REPLACE THIS WITH YOUR OWN PASSWORD

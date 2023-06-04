@@ -54,11 +54,11 @@ ssh_permit_root_login: without-password
 
 # Vars geerlingguy.firewall
 firewall_allowed_tcp_ports:
-  - "22"
-  - "80"
-  - "443"
+  - "{{ ssh_server_ports }}"
+  - "{{ apache_listen_port }}"
+  - "{{ apache_listen_port_ssl }}"
 firewall_allowed_udp_ports:
-  - "51820"
+  - "{{ wireguard_port }}"
 
 
 # jnv.unattended-upgrades Vars
@@ -83,16 +83,16 @@ apache_remove_default_vhost: true
 apache_vhosts:
   # Additional properties:
   # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  - servername: "msehr.local"
-    documentroot: "/home/ehr/public_html/"
+  - servername: "{{ domain }}"
+    documentroot: "{{ msehrPath }}/public_html/"
 
 apache_vhosts_ssl:
 #  Additional properties:
 #  'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  - servername: "msehr.local"
-    documentroot: "/home/ehr/public_html/"
-    certificate_file: "/etc/ssl/msehr.local/msehr.local.pem"
-    certificate_key_file: "/etc/ssl/msehr.local/msehr.local.key"
+  - servername: "{{ domain }}"
+    documentroot: "{{ msehrPath }}/public_html/"
+    certificate_file: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
+    certificate_key_file: "/etc/ssl/{{ domain }}/{{ domain }}.key"
 #   # Optional.
 #   certificate_chain_file: "/path/to/certificate_chain.crt"
 
@@ -147,15 +147,15 @@ php_use_managed_ini: true
 php_max_input_vars: "10000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
-php_date_timezone: "Europe/Paris"
+php_date_timezone: "{{ timezone }}"
 
 
 # geerlingguy.mysql Vars
 
 # Set this to the user ansible is logging in as - should have root
 # or sudo access
-mysql_user_home: /home/vagrant
-mysql_user_name: vagrant
+mysql_user_home: "/home/{{ user }}"
+mysql_user_name: "{{ user }}"
 mysql_user_password: root
 
 # The default root user installed by mysql - almost always root
@@ -196,8 +196,9 @@ mysql_users:
 # VPN
 # https://github.com/githubixx/ansible-role-wireguard
 
+wireguard_port: "51820"
 wireguard_address: 10.9.0.1/32
-wireguard_endpoint: 192.168.1.17
+wireguard_endpoint: "192.168.1.17:{{ wireguard_port }}"
 wireguard_preup:
   - echo 1 > /proc/sys/net/ipv4/ip_forward
 wireguard_postup:

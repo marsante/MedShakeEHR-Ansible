@@ -1,6 +1,7 @@
 machines=[
   {
     :hostname => "medshakeehr",
+    :network => "public_network",
     :ip => "192.168.1.17",
     :box => "generic/debian11",
     :ram => 512,
@@ -8,7 +9,8 @@ machines=[
   },
   {
     :hostname => "client",
-    :ip => "192.168.1.18",
+    :network => "private_network",
+    :ip => "192.168.56.11",
     :box => "generic/debian11",
     :ram => 512,
     :cpu => 2,
@@ -24,7 +26,7 @@ Vagrant.configure("2") do |config|
       # libvirt can't attach wireless interface to a bridge 
         #https://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29
         
-      node.vm.network  "public_network", ip: machine[:ip]
+      node.vm.network  machine[:network], ip: machine[:ip]
       
       node.vm.provider "libvirt" do |lb|
         lb.memory = machine[:ram]
