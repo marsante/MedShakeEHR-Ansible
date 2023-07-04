@@ -2,7 +2,7 @@ namespace: marsante
 
 name: medshakeehr
 
-version: 2.3.0
+version: 2.4.1
 
 readme: README.md
 
@@ -23,11 +23,11 @@ tags: [health,care,medshakeehr,ehr]
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: { geerlingguy.apache,
+dependencies: { devsec.hardening,
+  geerlingguy.apache,
   geerlingguy.firewall,
-  jnv.unattended-upgrades,
   githubixx.ansible_role_wireguard,
-  devsec.hardening
+  jnv.unattended-upgrades
 }
 
 repository: https://github.com/marsante/MedShakeEHR-Ansible
