@@ -116,7 +116,7 @@ php_version: '8.1'
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
+php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-zip']
 # Default PHP version to install on Debian-based OSes (OS-specific).
 php_default_version_debian: "{{ php_version }}"
 
