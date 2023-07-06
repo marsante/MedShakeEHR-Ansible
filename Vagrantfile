@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
       # libvirt can't attach wireless interface to a bridge 
         #https://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29
         
-      node.vm.network  machine[:network], ip: machine[:ip]
-      
+      node.vm.network  machine[:network], :ip => machine[:ip] #, :dev => "virbr0", :mode => "bridge", :type => "bridge"
+
       node.vm.provider "libvirt" do |lb|
         lb.memory = machine[:ram]
         lb.cpus = machine[:cpu]

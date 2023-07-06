@@ -36,7 +36,7 @@ ansible-galaxy install -r requirements.yml
 - Lancer le playbook en remplaçant user et host avec les bons paramètres :`ansible-playbook playbook.yml -u <user> -i <host>` ou via un fichier `host.yml` : `ansible-playbook -i hosts.yml  --user=<user> playbook.yml`
 
 ## Variables
-Les variables des collections et rôles `devsec.hardening`, `geerlingguy.firewall`, `jnv.unattended-upgrades`, `geerlingguy.apache`, `geerlingguy.php`, `geerlingguy.mysql`, sont décrites dans les `README` des projets sur Github.
+Les variables des collections et rôles `devsec.hardening`, `geerlingguy.firewall`, `hifis.unattended_upgrades`, `geerlingguy.apache`, `geerlingguy.php`, `geerlingguy.mysql`, sont décrites dans les `README` des projets sur Github.
 
 | Nom                     | Valeurs par défaut                                                       | Description                                                                                |
 | ----                    | ------------------                                                       | ------------                                                                               |

@@ -7,13 +7,13 @@ domain: msehr.local
 timezone: "Europe/Paris"
 msehrPath: "/home/ehr"
 
-msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk','python3-openssl','wget']
+msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk-java','python3-openssl','wget']
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
-msehr_base_release: "8.0.0"
+msehr_base_release: "8.0.1"
 # sha256 check sum for the getted file (integrity check for the downloaded file)
-msehr_base_checksum: "sha256:1f6168627adb1cbe87053d6d48bb87a8c3bcaa9f97744d8bc28c5721c1dc5c42"
+msehr_base_checksum: "sha256:4562a2da89a4c8aa7204582eaf7dc3c79d81ff68e2a8817a3789ddafde693eee"
 
 # generate the self signed certificate for medshake web access
 create_self_signed_cert: true
@@ -116,7 +116,7 @@ php_version: '8.1'
 # for RHEL/CentOS.
 php_enablerepo: ""
 
-php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-zip']
+php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
 # Default PHP version to install on Debian-based OSes (OS-specific).
 php_default_version_debian: "{{ php_version }}"
 

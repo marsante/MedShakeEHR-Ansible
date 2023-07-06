@@ -11,7 +11,7 @@
     - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
     - { role: devsec.hardening.ssh_hardening, tags: ['SSH-sec', 'security', 'base'] }
     - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
-    - { role: jnv.unattended-upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    - { role: hifis.unattended_upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
 
   tasks:
     - name: Fix apache.role

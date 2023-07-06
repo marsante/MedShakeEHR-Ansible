@@ -27,7 +27,7 @@ dependencies: { devsec.hardening,
   geerlingguy.apache,
   geerlingguy.firewall,
   githubixx.ansible_role_wireguard,
-  jnv.unattended-upgrades
+  hifis.unattended_upgrades
 }
 
 repository: https://github.com/marsante/MedShakeEHR-Ansible
