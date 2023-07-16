@@ -28,14 +28,14 @@ Vagrant.configure("2") do |config|
         
       node.vm.network  machine[:network], :ip => machine[:ip] #, :dev => "virbr0", :mode => "bridge", :type => "bridge"
 
-      node.vm.provider "libvirt" do |lb|
-        lb.memory = machine[:ram]
-        lb.cpus = machine[:cpu]
-      end
-      
       node.vm.provider "virtualbox" do |v|
         v.memory = machine[:ram]
         v.cpus = machine[:cpu]
+      end
+
+      node.vm.provider "libvirt" do |lb|
+        lb.memory = machine[:ram]
+        lb.cpus = machine[:cpu]
       end
       
       node.vm.provision "ansible" do |ansible|

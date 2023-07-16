@@ -1,7 +1,7 @@
 ---
 roles: 
   - name: geerlingguy.firewall
-  - name: jnv.unattended-upgrades
+  - name: hifis.unattended_upgrades
   - name: geerlingguy.apache
   - name: githubixx.ansible_role_wireguard
   
