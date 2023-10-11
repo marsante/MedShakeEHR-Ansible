@@ -11,9 +11,9 @@ msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick
 
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 # MSEHR version to get
-msehr_base_release: "8.0.3"
+msehr_base_release: "8.0.5"
 # sha256 check sum for the getted file (integrity check for the downloaded file)
-msehr_base_checksum: "sha256:a670e3dbb676e05e0332049243a110746cdd8e94eb0b0aedd0468b1e4a4a3afb"
+msehr_base_checksum: "sha256:b217a077aa94b53508d636b177cfe943059c9a8847f6ba49f67f9f6cbb8a18e0"
 # generate the self signed certificate for medshake web access
 create_self_signed_cert: true
 countryName: FR
