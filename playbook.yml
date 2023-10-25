@@ -3,6 +3,11 @@
   hosts: medshakeehr
   become: true
 
+  pre_tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
   roles:
 
     - { role: marsante.ansible_role_medshakeehr, tags: ['MedShakeEHR', 'base', 'minimal'] }

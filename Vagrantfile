@@ -3,7 +3,7 @@ machines=[
     :hostname => "medshakeehr",
     :network => "public_network",
     :ip => "192.168.1.17",
-    :box => "generic/debian11",
+    :box => "debian/bullseye64",
     :ram => 512,
     :cpu => 2,
   },
@@ -11,7 +11,7 @@ machines=[
     :hostname => "client",
     :network => "private_network",
     :ip => "192.168.56.11",
-    :box => "generic/debian11",
+    :box => "debian/bullseye64",
     :ram => 512,
     :cpu => 2,
   }
