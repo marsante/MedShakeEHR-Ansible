@@ -42,6 +42,8 @@ Vagrant.configure("2") do |config|
         ansible.limit = machine[:hostname]
         ansible.playbook = "playbook.yml"
         ansible.become = true
+        ansible.galaxy_role_file = "requirements.yml"
+        ansible.raw_arguments = ['-D']
         ansible.groups = {
           "medshakeehr" => ["medshakeehr"],
           "client"  => ["client"]

@@ -2,25 +2,41 @@
 - name: Installation medshakehr
   hosts: medshakeehr
   become: true
-
   pre_tasks:
     - name: Update package cache
       apt:
-        update_cache: yes
-
+        update_cache: true
   roles:
-
-    - { role: marsante.ansible_role_medshakeehr, tags: ['MedShakeEHR', 'base', 'minimal'] }
-    - { role: devsec.hardening.mysql_hardening, tags: ['MariaDB-sec', 'security', 'base'] }
-    - { role: devsec.hardening.os_hardening, tags: ['OS-sec', 'security', 'base'] }
-    - { role: devsec.hardening.ssh_hardening, tags: ['SSH-sec', 'security', 'base'] }
-    - { role: geerlingguy.firewall, tags: ['Firewall', 'security', 'base'] }
-    - { role: hifis.unattended_upgrades, tags: ['AutoUpgrades', 'security', 'base'] }
+    - role: marsante.ansible_role_medshakeehr
+      tags:
+        - MedShakeEHR
+        - minimal
+    - role: devsec.hardening.mysql_hardening
+      tags:
+        - MariaDB-sec
+        - security
+    - role: devsec.hardening.os_hardening
+      tags:
+        - OS-sec
+        - security
+    - role: devsec.hardening.ssh_hardening
+      tags:
+        - SSH-sec
+        - security
+    - role: geerlingguy.firewall
+      tags:
+        - Firewall
+        - security
+    - role: hifis.unattended_upgrades
+      tags:
+        - AutoUpgrades
+        - security
 
 - name: Installation vpn client
   hosts: all
   become: true
-
   roles:
-    - { role: githubixx.ansible_role_wireguard, tags: ['VPN', 'security']}
-...
+    - role: githubixx.ansible_role_wireguard
+      tags:
+        - VPN
+        - security
