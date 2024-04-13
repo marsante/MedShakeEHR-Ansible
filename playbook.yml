@@ -7,7 +7,7 @@
       apt:
         update_cache: true
   roles:
-    - role: marsante.ansible_role_medshakeehr
+    - role: marsante.medshakeehr
       tags:
         - MedShakeEHR
         - minimal
@@ -32,11 +32,11 @@
         - AutoUpgrades
         - security
 
-- name: Installation vpn client
-  hosts: all
-  become: true
-  roles:
-    - role: githubixx.ansible_role_wireguard
-      tags:
-        - VPN
-        - security
+# - name: Installation vpn client
+#   hosts: all
+#   become: true
+#   roles:
+#     - role: githubixx.ansible_role_wireguard
+#       tags:
+#         - VPN
+#         - security

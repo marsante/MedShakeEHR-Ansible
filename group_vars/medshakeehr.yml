@@ -102,13 +102,11 @@ apache_mods_enabled:
   - rewrite
   - headers
   - ssl
-  - mpm_prefork
-  - "php{{ php_version }}"
 apache_mods_disabled:
-  - mpm_event
+
 
 # geerlingguy.php_version Vars
-php_version: '8.1'
+php_version: '8.2'
 
 # geerlingguy.php Vars
 # Pass in a comma-separated list of repos to use (e.g. "remi,epel"). Used only
@@ -143,7 +141,7 @@ php_enable_apc: false
 # Any and all changes to /etc/php.ini will be your responsibility.
 php_use_managed_ini: true
 
-php_max_input_vars: "10000"
+php_max_input_vars: "20000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "{{ timezone }}"
