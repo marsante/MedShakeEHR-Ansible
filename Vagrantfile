@@ -1,20 +1,25 @@
 machines=[
   {
     :hostname => "medshakeehr",
-    :network => "public_network",
-    :ip => "192.168.1.17",
-    :box => "debian/bookworm64",
-    :ram => 512,
-    :cpu => 2,
-  },
-  {
-    :hostname => "client",
     :network => "private_network",
     :ip => "192.168.56.11",
+    # # For testing VPN
+    # :network => "public_network",
+    # :ip => "192.168.1.17",
     :box => "debian/bookworm64",
     :ram => 512,
     :cpu => 2,
   }
+  #,
+  # # For testing VPN
+  # {
+  #   :hostname => "client",
+  #   :network => "private_network",
+  #   :ip => "192.168.56.12",
+  #   :box => "debian/bookworm64",
+  #   :ram => 512,
+  #   :cpu => 2,
+  # }
 ]
 
 Vagrant.configure("2") do |config|

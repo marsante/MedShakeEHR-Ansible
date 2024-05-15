@@ -11,32 +11,12 @@
       tags:
         - MedShakeEHR
         - minimal
-    - role: devsec.hardening.mysql_hardening
-      tags:
-        - MariaDB-sec
-        - security
-    - role: devsec.hardening.os_hardening
-      tags:
-        - OS-sec
-        - security
-    - role: devsec.hardening.ssh_hardening
-      tags:
-        - SSH-sec
-        - security
-    - role: geerlingguy.firewall
-      tags:
-        - Firewall
-        - security
-    - role: hifis.unattended_upgrades
-      tags:
-        - AutoUpgrades
-        - security
 
-# - name: Installation vpn client
-#   hosts: all
-#   become: true
-#   roles:
-#     - role: githubixx.ansible_role_wireguard
-#       tags:
-#         - VPN
-#         - security
+- name: Installation vpn client
+  hosts: all
+  become: true
+  roles:
+    - role: githubixx.ansible_role_wireguard
+      tags:
+        - VPN
+        - security

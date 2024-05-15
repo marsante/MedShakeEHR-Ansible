@@ -1,9 +1,4 @@
 ---
 roles: 
   - name: marsante.medshakeehr
-  - name: geerlingguy.firewall
-  - name: hifis.unattended_upgrades
   - name: githubixx.ansible_role_wireguard
-  
-collections:
-  - name: devsec.hardening
