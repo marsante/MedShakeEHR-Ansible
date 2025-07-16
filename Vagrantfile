@@ -6,7 +6,7 @@ machines=[
     # # For testing VPN
     # :network => "public_network",
     # :ip => "192.168.1.17",
-    :box => "debian/bookworm64",
+    :box => "generic/debian12",
     :ram => 512,
     :cpu => 2,
   }

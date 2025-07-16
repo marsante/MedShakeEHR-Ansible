@@ -7,19 +7,15 @@ sql_root_password: root
 sql_user: user
 sql_user_password: user
 sql_database: medshakeehr
-msehr_base_release: "8.1.1"
-msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-msehr_base_checksum: "sha256:5ae9ddf3e528eab4fe5882724cc00d912600a9fb1748ff31e47c6191a173b200"
 msehr_dir: /var/www/ehr
 timezone: Europe/Paris
 msehr_domain: msehr.local
-upload_max_filesize: upload_max_filesize = 20M
-post_maxsize: post_max_size = 20M
-max_input_vars: max_input_vars = 20000
-error_reporting: error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
-display_errors: display_errors = Off
-display_startup_errors: display_startup_errors = Off
-msehr_packages: ['acl', 'apache2', 'composer', 'curl', 'ghostscript', 'git', 'grub2', 'imagemagick', 'mariadb-server', 'ntp', 'pdftk-java', 'php', 'php-bcmath', 'php-curl', 'php-gd', 'php-gnupg', 'php-imagick', 'php-imap', 'php-intl', 'php-json', 'php-mysql', 'php-soap', 'php-xml', 'php-yaml', 'php-zip', 'python3-mysqldb', 'python3-openssl', 'ufw', 'unattended-upgrades' ]
+upload_max_filesize: 20M
+post_maxsize: 20M
+max_input_vars: 10000
+error_reporting: 'E_ALL & ~E_DEPRECATED & ~E_STRICT'
+display_errors: 'Off'
+display_startup_errors: 'Off'
 
 # VPN
 # https://github.com/githubixx/ansible-role-wireguard

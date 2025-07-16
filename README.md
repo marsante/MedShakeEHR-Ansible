@@ -45,19 +45,19 @@ ansible-galaxy install -r requirements.yml
 | sql_user     | user                                                   | Nom du compte utilisateur SQL                                                                   |
 | sql_user_password    | user                                                   | Mot de passe du compte utilisateur SQL                                                          |
 | sql_database          | medshakeehr                                            | Nom de la base de données SQL                                                                   |
-| msehr_base_release | 8.1.1                                                  | Version de MedShakeEHR                                                                  |
+| msehr_base_release | 8.2.3                                                  | Version de MedShakeEHR                                                                  |
 | msehr_base_repo_url| https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/ | URL de MedShakeEHR                                          |
-| msehr_base_checksum| sha256:5ae9ddf3e528eab4fe5882724cc00d912600a9fb1748ff31e47c6191a173b200 | Checksum  de MedShakeEHR                                        |
-| msehr_dir          | /opt/ehr                                               | Chemin d’installation de MedShakeEHR                                                            |
+| msehr_base_checksum| sha256:bb2f7496daa01fdd5028ff4e60e8b997a768971c4b48ea8f59b405650ab3b07b | Checksum  de MedShakeEHR                                        |
+| msehr_dir          | /var/www/ehr                                               | Chemin d’installation de MedShakeEHR                                                            |
 | timezone           | Europe/Paris                                           | Fuseau horaire                                                                                   |
 | domain             | msehr.local                                            | Nom de domaine                                                                                   |
 | upload_max_filesize  | upload_max_filesize = 20M                              | Taille maximale des fichiers téléversés                                                         |
 | post_maxsize        | post_max_size = 20M                                    | Taille maximale des données POST                                                                |
-| max_input_vars       | max_input_vars = 20000                                 | Nombre maximal de variables d’entrée                                                             |
-| error_reporting     | error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT    | Niveau de rapport d’erreurs                                                                      |
-| display_errors      | display_errors = Off                                   | Affichage des erreurs (Off : désactivé, On : activé)                                            |
-| display_startup_errors| display_startup_errors = Off                           | Affichage des erreurs de démarrage (Off : désactivé, On : activé)                               |
-| msehr_packages      | [‘acl’, ‘apache2’, ‘composer’, ‘curl’, ‘ghostscript’, ‘git’, ‘grub2’, ‘imagemagick’, ‘mariadb-server’, ‘ntp’, ‘pdftk-java’, ‘php’, ‘php-bcmath’, ‘php-curl’, ‘php-gd’, ‘php-gnupg’, ‘php-imagick’, ‘php-imap’, ‘php-intl’, ‘php-json’, ‘php-mysql’, ‘php-soap’, ‘php-xml’, ‘php-yaml’, ‘php-zip’, ‘python3-mysqldb’, ‘python3-openssl’, ‘ufw’, ‘unattended-upgrades’ ] | Liste des packages requis pour MedShakeEHR |                                                   |
+| max_input_vars       | max_input_vars = 10000                                 | Nombre maximal de variables d’entrée                                                             |
+| error_reporting     |  ‘E_ALL & ~E_DEPRECATED & ~E_STRICT’    | Niveau de rapport d’erreurs                                                                      |
+| display_errors      | ‘Off’                                   | Affichage des erreurs (Off : désactivé, On : activé)                                            |
+| display_startup_errors| ‘Off’                           | Affichage des erreurs de démarrage (Off : désactivé, On : activé)                               |
+| msehr_packages      | [‘acl’, ‘apache2’, ‘composer’, ‘curl’, ‘ghostscript’, ‘git’, ‘imagemagick’, ‘mariadb-server’, ‘ntpsec’, ‘pdftk-java’, ‘php’, ‘php-bcmath’, ‘php-curl’, ‘php-gd’, ‘php-gnupg’, ‘php-imagick’, ‘php-intl’, ‘php-json’, ‘php-mysql’, ‘php-soap’, ‘php-xml’, ‘php-yaml’, ‘php-zip’, ‘python3-mysqldb’, ‘python3-openssl’, ‘ufw’, ‘unattended-upgrades’ ] | Liste des packages requis pour MedShakeEHR |
 
 ## Auteur, Contributeurs et Licence
 - Auteur
